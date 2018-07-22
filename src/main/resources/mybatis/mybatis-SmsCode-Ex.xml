@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 2018/1/25 17:05:18 AJiong created. -->
+
+<mapper namespace="cn.com.czcb.dao.ISmsCodeDao">
+	<update id="updateSmsCodeList" parameterType="cn.com.czcb.dao.QueryParams">
+        UPDATE sms_code SET validated = 1 WHERE id in 
+        <foreach collection="smsCodeIds" item="smsCodeId" open="(" separator="," close=")">
+        	#{smsCodeId}
+        </foreach>
+    </update>
+</mapper> 
+
+

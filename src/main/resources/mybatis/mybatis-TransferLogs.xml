@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 2018/3/9 11:04:06 AJiong created. -->
+
+<mapper namespace="cn.com.czcb.dao.ITransferLogsDao">
+
+    <resultMap type="cn.com.czcb.model.TransferLogs" id="resultMap">
+        <id property="id" column="id" />
+        <result property="cardNo" column="card_no" />
+        <result property="orderId" column="order_id" />
+        <result property="cardBalance" column="card_balance" />
+        <result property="initRapdu" column="init_rapdu" />
+        <result property="transMark" column="trans_mark" />
+        <result property="centerFlowNo" column="center_flow_no" />
+        <result property="rapdu" column="rapdu" />
+        <result property="transDate" column="trans_date" />
+        <result property="transTime" column="trans_time" />
+        <result property="returnMsg" column="return_msg" />
+        <result property="createTime" column="create_time" />
+    </resultMap>
+
+    <sql id="baseCol">
+        id, card_no, order_id, card_balance, init_rapdu, trans_mark, center_flow_no, rapdu, trans_date, trans_time, return_msg, create_time
+    </sql>
+	
+	<sql id="pageSql">
+    	<if test="__start !=null and __size!=null"><![CDATA[ limit #{__start},#{__size} ]]></if>
+    </sql>
+	
+    <sql id="whereSql">
+        <trim prefix="WHERE" prefixOverrides="and |or ">
+            <if test="id != null"><![CDATA[ and id = #{id} ]]></if>
+            <if test="id_enum != null">
+                <![CDATA[ and id in ]]>
+                <foreach collection="id_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="cardNo != null"><![CDATA[ and card_no = #{cardNo} ]]></if>
+            <if test="cardNo_enum != null">
+                <![CDATA[ and card_no in ]]>
+                <foreach collection="cardNo_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="orderId != null"><![CDATA[ and order_id = #{orderId} ]]></if>
+            <if test="orderId_enum != null">
+                <![CDATA[ and order_id in ]]>
+                <foreach collection="orderId_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="cardBalance != null"><![CDATA[ and card_balance = #{cardBalance} ]]></if>
+            <if test="cardBalance_r_min != null"><![CDATA[ and card_balance >= #{cardBalance_r_min} and card_balance <= #{cardBalance_r_max} ]]></if>
+            <if test="cardBalance_enum != null">
+                <![CDATA[ and card_balance in ]]>
+                <foreach collection="cardBalance_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="initRapdu != null"><![CDATA[ and init_rapdu = #{initRapdu} ]]></if>
+            <if test="initRapdu_enum != null">
+                <![CDATA[ and init_rapdu in ]]>
+                <foreach collection="initRapdu_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="transMark != null"><![CDATA[ and trans_mark = #{transMark} ]]></if>
+            <if test="transMark_r_min != null"><![CDATA[ and trans_mark >= #{transMark_r_min} and trans_mark <= #{transMark_r_max} ]]></if>
+            <if test="transMark_enum != null">
+                <![CDATA[ and trans_mark in ]]>
+                <foreach collection="transMark_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="centerFlowNo != null"><![CDATA[ and center_flow_no = #{centerFlowNo} ]]></if>
+            <if test="centerFlowNo_enum != null">
+                <![CDATA[ and center_flow_no in ]]>
+                <foreach collection="centerFlowNo_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="rapdu != null"><![CDATA[ and rapdu = #{rapdu} ]]></if>
+            <if test="rapdu_enum != null">
+                <![CDATA[ and rapdu in ]]>
+                <foreach collection="rapdu_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="transDate != null"><![CDATA[ and trans_date = #{transDate} ]]></if>
+            <if test="transDate_enum != null">
+                <![CDATA[ and trans_date in ]]>
+                <foreach collection="transDate_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="transTime != null"><![CDATA[ and trans_time = #{transTime} ]]></if>
+            <if test="transTime_enum != null">
+                <![CDATA[ and trans_time in ]]>
+                <foreach collection="transTime_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="returnMsg != null"><![CDATA[ and return_msg = #{returnMsg} ]]></if>
+            <if test="returnMsg_enum != null">
+                <![CDATA[ and return_msg in ]]>
+                <foreach collection="returnMsg_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="createTime != null"><![CDATA[ and create_time = #{createTime} ]]></if>
+            <if test="createTime_r_min != null"><![CDATA[ and create_time >= #{createTime_r_min} and create_time <= #{createTime_r_max} ]]></if>
+            <if test="createTime_enum != null">
+                <![CDATA[ and create_time in ]]>
+                <foreach collection="createTime_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="_default_mulattr != null">
+                <![CDATA[ and ]]>
+                <foreach collection="_default_mulattr" item="item" open="(" separator=" or " close=")">
+                    <if test="item.name == 'id'"><![CDATA[ id = #{item.value} ]]></if>
+                    <if test="item.name == 'cardNo'"><![CDATA[ card_no = #{item.value} ]]></if>
+                    <if test="item.name == 'orderId'"><![CDATA[ order_id = #{item.value} ]]></if>
+                    <if test="item.name == 'initRapdu'"><![CDATA[ init_rapdu = #{item.value} ]]></if>
+                    <if test="item.name == 'centerFlowNo'"><![CDATA[ center_flow_no = #{item.value} ]]></if>
+                    <if test="item.name == 'rapdu'"><![CDATA[ rapdu = #{item.value} ]]></if>
+                    <if test="item.name == 'transDate'"><![CDATA[ trans_date = #{item.value} ]]></if>
+                    <if test="item.name == 'transTime'"><![CDATA[ trans_time = #{item.value} ]]></if>
+                    <if test="item.name == 'returnMsg'"><![CDATA[ return_msg = #{item.value} ]]></if>
+                </foreach>
+            </if>
+        </trim>
+    </sql>
+
+    <sql id="orderSql">
+        <trim prefix="ORDER BY" suffixOverrides=",">
+            <if test="_orderBy == 'id_desc'"><![CDATA[ id desc, ]]></if>
+            <if test="_orderBy == 'id_asc'"><![CDATA[ id, ]]></if>
+            <if test="_orderBy == 'cardNo_desc'"><![CDATA[ card_no desc, ]]></if>
+            <if test="_orderBy == 'cardNo_asc'"><![CDATA[ card_no, ]]></if>
+            <if test="_orderBy == 'orderId_desc'"><![CDATA[ order_id desc, ]]></if>
+            <if test="_orderBy == 'orderId_asc'"><![CDATA[ order_id, ]]></if>
+            <if test="_orderBy == 'cardBalance_desc'"><![CDATA[ card_balance desc, ]]></if>
+            <if test="_orderBy == 'cardBalance_asc'"><![CDATA[ card_balance, ]]></if>
+            <if test="_orderBy == 'initRapdu_desc'"><![CDATA[ init_rapdu desc, ]]></if>
+            <if test="_orderBy == 'initRapdu_asc'"><![CDATA[ init_rapdu, ]]></if>
+            <if test="_orderBy == 'transMark_desc'"><![CDATA[ trans_mark desc, ]]></if>
+            <if test="_orderBy == 'transMark_asc'"><![CDATA[ trans_mark, ]]></if>
+            <if test="_orderBy == 'centerFlowNo_desc'"><![CDATA[ center_flow_no desc, ]]></if>
+            <if test="_orderBy == 'centerFlowNo_asc'"><![CDATA[ center_flow_no, ]]></if>
+            <if test="_orderBy == 'rapdu_desc'"><![CDATA[ rapdu desc, ]]></if>
+            <if test="_orderBy == 'rapdu_asc'"><![CDATA[ rapdu, ]]></if>
+            <if test="_orderBy == 'transDate_desc'"><![CDATA[ trans_date desc, ]]></if>
+            <if test="_orderBy == 'transDate_asc'"><![CDATA[ trans_date, ]]></if>
+            <if test="_orderBy == 'transTime_desc'"><![CDATA[ trans_time desc, ]]></if>
+            <if test="_orderBy == 'transTime_asc'"><![CDATA[ trans_time, ]]></if>
+            <if test="_orderBy == 'returnMsg_desc'"><![CDATA[ return_msg desc, ]]></if>
+            <if test="_orderBy == 'returnMsg_asc'"><![CDATA[ return_msg, ]]></if>
+            <if test="_orderBy == 'createTime_desc'"><![CDATA[ create_time desc, ]]></if>
+            <if test="_orderBy == 'createTime_asc'"><![CDATA[ create_time, ]]></if>
+
+			<if test="_orderBy_enum != null">
+				<foreach collection="_orderBy_enum" item="orderItem" open="" separator="," close="">
+					<if test="orderItem == 'id_desc'"><![CDATA[ id desc ]]></if>
+					<if test="orderItem == 'id_asc'"><![CDATA[ id ]]></if>
+					<if test="orderItem == 'cardNo_desc'"><![CDATA[ card_no desc ]]></if>
+					<if test="orderItem == 'cardNo_asc'"><![CDATA[ card_no ]]></if>
+					<if test="orderItem == 'orderId_desc'"><![CDATA[ order_id desc ]]></if>
+					<if test="orderItem == 'orderId_asc'"><![CDATA[ order_id ]]></if>
+					<if test="orderItem == 'cardBalance_desc'"><![CDATA[ card_balance desc ]]></if>
+					<if test="orderItem == 'cardBalance_asc'"><![CDATA[ card_balance ]]></if>
+					<if test="orderItem == 'initRapdu_desc'"><![CDATA[ init_rapdu desc ]]></if>
+					<if test="orderItem == 'initRapdu_asc'"><![CDATA[ init_rapdu ]]></if>
+					<if test="orderItem == 'transMark_desc'"><![CDATA[ trans_mark desc ]]></if>
+					<if test="orderItem == 'transMark_asc'"><![CDATA[ trans_mark ]]></if>
+					<if test="orderItem == 'centerFlowNo_desc'"><![CDATA[ center_flow_no desc ]]></if>
+					<if test="orderItem == 'centerFlowNo_asc'"><![CDATA[ center_flow_no ]]></if>
+					<if test="orderItem == 'rapdu_desc'"><![CDATA[ rapdu desc ]]></if>
+					<if test="orderItem == 'rapdu_asc'"><![CDATA[ rapdu ]]></if>
+					<if test="orderItem == 'transDate_desc'"><![CDATA[ trans_date desc ]]></if>
+					<if test="orderItem == 'transDate_asc'"><![CDATA[ trans_date ]]></if>
+					<if test="orderItem == 'transTime_desc'"><![CDATA[ trans_time desc ]]></if>
+					<if test="orderItem == 'transTime_asc'"><![CDATA[ trans_time ]]></if>
+					<if test="orderItem == 'returnMsg_desc'"><![CDATA[ return_msg desc ]]></if>
+					<if test="orderItem == 'returnMsg_asc'"><![CDATA[ return_msg ]]></if>
+					<if test="orderItem == 'createTime_desc'"><![CDATA[ create_time desc ]]></if>
+					<if test="orderItem == 'createTime_asc'"><![CDATA[ create_time ]]></if>
+					
+				</foreach>
+			</if>
+        </trim>
+    </sql>
+	
+	<sql id="updateSetSql">
+        <trim prefix="set" prefixOverrides="and">
+            <if test="cardNo != null"><![CDATA[ and card_no = #{cardNo} ]]></if>
+            <if test="orderId != null"><![CDATA[ and order_id = #{orderId} ]]></if>
+            <if test="cardBalance != null"><![CDATA[ and card_balance = #{cardBalance} ]]></if>
+            <if test="initRapdu != null"><![CDATA[ and init_rapdu = #{initRapdu} ]]></if>
+            <if test="transMark != null"><![CDATA[ and trans_mark = #{transMark} ]]></if>
+            <if test="centerFlowNo != null"><![CDATA[ and center_flow_no = #{centerFlowNo} ]]></if>
+            <if test="rapdu != null"><![CDATA[ and rapdu = #{rapdu} ]]></if>
+            <if test="transDate != null"><![CDATA[ and trans_date = #{transDate} ]]></if>
+            <if test="transTime != null"><![CDATA[ and trans_time = #{transTime} ]]></if>
+            <if test="returnMsg != null"><![CDATA[ and return_msg = #{returnMsg} ]]></if>
+            <if test="createTime != null"><![CDATA[ and create_time = #{createTime} ]]></if>
+        </trim>
+    </sql>	
+
+    <insert id="insertObject" parameterType="cn.com.czcb.model.TransferLogs">
+        insert into
+        transfer_logs(id,card_no,order_id,card_balance,init_rapdu,trans_mark,center_flow_no,rapdu,trans_date,trans_time,return_msg,create_time)
+        values(#{id},#{cardNo},#{orderId},#{cardBalance},#{initRapdu},#{transMark},#{centerFlowNo},#{rapdu},#{transDate},#{transTime},#{returnMsg},#{createTime});
+    </insert>
+
+    <update id="updateObject" parameterType="cn.com.czcb.model.TransferLogs">
+        update transfer_logs
+        set card_no=#{cardNo},order_id=#{orderId},card_balance=#{cardBalance},init_rapdu=#{initRapdu},trans_mark=#{transMark},center_flow_no=#{centerFlowNo},rapdu=#{rapdu},trans_date=#{transDate},trans_time=#{transTime},return_msg=#{returnMsg},create_time=#{createTime}
+        where id=#{id};
+    </update>
+	
+	<update id="updateObjectByFields" parameterType="java.util.Map">
+        update transfer_logs
+        <include refid="updateSetSql" />
+        where id=#{id};
+    </update>
+
+    <delete id="deleteObject" parameterType="string">
+        delete from transfer_logs where id=#{id};
+    </delete>
+
+    <delete id="deleteObjectByWhere" parameterType="cn.com.czcb.dao.QueryParams">
+        delete from transfer_logs
+        <include refid="whereSql" />
+    </delete>
+
+    <select id="getBaseObject" parameterType="string" resultMap="resultMap">
+        select 
+        <include refid="baseCol" />
+        from transfer_logs where id=#{id};
+    </select>
+
+    <select id="getDetailObject" parameterType="string" resultMap="resultMap">
+        select * from transfer_logs where id=#{id};
+    </select>
+
+    <select id="queryCount" parameterType="cn.com.czcb.dao.QueryParams" resultType="int">
+        select count(*) from transfer_logs
+          <include refid="whereSql" />
+    </select>
+
+    <select id="queryBaseList" parameterType="cn.com.czcb.dao.QueryParams" resultMap="resultMap">
+        select 
+        <include refid="baseCol" />
+        from transfer_logs
+            <include refid="whereSql" />
+          <include refid="orderSql" />
+        <include refid="pageSql" />
+    </select>
+
+    <select id="queryDetailList" parameterType="cn.com.czcb.dao.QueryParams" resultMap="resultMap">
+        select * from transfer_logs
+            <include refid="whereSql" />
+          <include refid="orderSql" />
+        <include refid="pageSql" />
+    </select>
+</mapper> 
+
+

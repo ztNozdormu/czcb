@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 2018/5/7 星期一 14:47:51 Cron created. -->
+
+<mapper namespace="cn.com.czcb.dao.IUserDeviceDao">
+
+	<resultMap type="cn.com.czcb.model.UserDevice" id="resultMap">
+		<id property="id" column="id" />
+		<result property="userId" column="user_id" />
+		<result property="deviceId" column="device_id" />
+		<result property="tag" column="tag" />
+	</resultMap>
+	
+	<resultMap type="cn.com.czcb.model.vo.DeviceVo" id="resultMapDeviceVo">
+		<result property="userId" column="user_id" />
+		<result property="deviceId" column="device_id" />
+		<result property="tag" column="tag" />
+		<result property="matchCode" column="match_code" />
+		<result property="deviceName" column="device_name" />
+		<result property="cardNo" column="card_no" />
+		<result property="matchTime" column="match_time" />
+	</resultMap>
+
+	<sql id="baseCol">
+		id, user_id, device_id,tag
+	</sql>
+
+	<sql id="pageSql">
+		<if test="__start !=null and __size!=null"><![CDATA[ limit #{__start},#{__size} ]]></if>
+	</sql>
+
+	<sql id="whereSql">
+		<trim prefix="WHERE" prefixOverrides="and |or ">
+			<if test="id != null"><![CDATA[ and id = #{id} ]]></if>
+			<if test="id_enum != null">
+                <![CDATA[ and id in ]]>
+				<foreach collection="id_enum" item="value" open="("
+					separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+				</foreach>
+			</if>
+			<if test="userId != null"><![CDATA[ and user_id = #{userId} ]]></if>
+			<if test="userId_enum != null">
+                <![CDATA[ and user_id in ]]>
+				<foreach collection="userId_enum" item="value" open="("
+					separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+				</foreach>
+			</if>
+			<if test="deviceId != null"><![CDATA[ and device_id = #{deviceId} ]]></if>
+			<if test="deviceId_enum != null">
+                <![CDATA[ and device_id in ]]>
+				<foreach collection="deviceId_enum" item="value" open="("
+					separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+				</foreach>
+			</if>
+			<if test="tag != null"><![CDATA[ and tag = #{tag} ]]></if>
+			<if test="tag_enum != null">
+                <![CDATA[ and tag in ]]>
+				<foreach collection="tag_enum" item="value" open="("
+					separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+				</foreach>
+			</if>
+			<if test="_default_mulattr != null">
+                <![CDATA[ and ]]>
+				<foreach collection="_default_mulattr" item="item" open="("
+					separator=" or " close=")">
+					<if test="item.name == 'id'"><![CDATA[ id = #{item.value} ]]></if>
+					<if test="item.name == 'userId'"><![CDATA[ user_id = #{item.value} ]]></if>
+					<if test="item.name == 'deviceId'"><![CDATA[ device_id = #{item.value} ]]></if>
+					<if test="item.name == 'tag'"><![CDATA[ tag = #{item.value} ]]></if>
+				</foreach>
+			</if>
+		</trim>
+	</sql>
+
+	<sql id="orderSql">
+		<trim prefix="ORDER BY" suffixOverrides=",">
+			<if test="_orderBy == 'id_desc'"><![CDATA[ id desc, ]]></if>
+			<if test="_orderBy == 'id_asc'"><![CDATA[ id, ]]></if>
+			<if test="_orderBy == 'userId_desc'"><![CDATA[ user_id desc, ]]></if>
+			<if test="_orderBy == 'userId_asc'"><![CDATA[ user_id, ]]></if>
+			<if test="_orderBy == 'deviceId_desc'"><![CDATA[ device_id desc, ]]></if>
+			<if test="_orderBy == 'deviceId_asc'"><![CDATA[ device_id, ]]></if>
+
+			<if test="_orderBy_enum != null">
+				<foreach collection="_orderBy_enum" item="orderItem" open=""
+					separator="," close="">
+					<if test="orderItem == 'id_desc'"><![CDATA[ id desc ]]></if>
+					<if test="orderItem == 'id_asc'"><![CDATA[ id ]]></if>
+					<if test="orderItem == 'userId_desc'"><![CDATA[ user_id desc ]]></if>
+					<if test="orderItem == 'userId_asc'"><![CDATA[ user_id ]]></if>
+					<if test="orderItem == 'deviceId_desc'"><![CDATA[ device_id desc ]]></if>
+					<if test="orderItem == 'deviceId_asc'"><![CDATA[ device_id ]]></if>
+
+				</foreach>
+			</if>
+		</trim>
+	</sql>
+
+	<sql id="updateSetSql">
+		<trim prefix="set" prefixOverrides="and">
+			<if test="userId != null"><![CDATA[ and user_id = #{userId} ]]></if>
+			<if test="deviceId != null"><![CDATA[ and device_id = #{deviceId} ]]></if>
+			<if test="tag != null"><![CDATA[ and tag = #{tag} ]]></if>
+		</trim>
+	</sql>
+
+	<insert id="insertObject" parameterType="cn.com.czcb.model.UserDevice">
+		insert into
+		user_device(id,user_id,device_id,tag)
+		values(#{id},#{userId},#{deviceId},#{tag});
+	</insert>
+
+	<update id="updateObject" parameterType="cn.com.czcb.model.UserDevice">
+		update user_device
+		set user_id=#{userId},device_id=#{deviceId},tag=#{tag}
+		where id=#{id};
+	</update>
+
+	<update id="updateObjectByFields" parameterType="java.util.Map">
+		update user_device
+		<include refid="updateSetSql" />
+		where id=#{id};
+	</update>
+
+	<delete id="deleteObject" parameterType="string">
+		delete from user_device where id=#{id};
+	</delete>
+
+	<delete id="deleteObjectByWhere" parameterType="cn.com.czcb.dao.QueryParams">
+		delete from user_device
+		<include refid="whereSql" />
+	</delete>
+
+	<select id="getBaseObject" parameterType="string" resultMap="resultMap">
+		select
+		<include refid="baseCol" />
+		from user_device where id=#{id};
+	</select>
+
+	<select id="getMyDeviceList" parameterType="string" resultMap="resultMapDeviceVo">
+		SELECT
+		ud.user_id userId,ud.device_id deviceId,ud.tag,d.match_code,d.device_name,d.card_no,d.match_time
+		FROM
+		`user_device` ud
+		LEFT JOIN device d ON ud.device_id = d.id
+		WHERE
+		ud.user_id = #{userId}
+		ORDER BY match_time DESC
+	</select>
+
+	<select id="getDetailObject" parameterType="string" resultMap="resultMap">
+		select * from user_device where id=#{id};
+	</select>
+
+	<select id="queryCount" parameterType="cn.com.czcb.dao.QueryParams"
+		resultType="int">
+		select count(*) from user_device
+		<include refid="whereSql" />
+	</select>
+
+	<select id="queryBaseList" parameterType="cn.com.czcb.dao.QueryParams"
+		resultMap="resultMap">
+		select
+		<include refid="baseCol" />
+		from user_device
+		<include refid="whereSql" />
+		<include refid="orderSql" />
+		<include refid="pageSql" />
+	</select>
+
+	<select id="queryDetailList" parameterType="cn.com.czcb.dao.QueryParams"
+		resultMap="resultMap">
+		select * from user_device
+		<include refid="whereSql" />
+		<include refid="orderSql" />
+		<include refid="pageSql" />
+	</select>
+</mapper> 
+
+

@@ -1,0 +1,151 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=0,minimum-scale,maximum-scale=1.0">
+    <title>使用说明</title>
+
+    <meta name="browsermode" content="application"> <!--开启应用模式-->
+    <meta name="format-detection" content="telephone=no"> <!--忽略ios电话识别-->
+    <meta name="apple-mobile-web-app-capable" content="yes"> <!--app全屏模式-->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"> <!--状态栏背景色-->
+    <meta name="mobile-web-app-capable" content="yes">   <!-- 定义你的网页为 Web 应用 -->
+
+    <meta name="x5-orientation" content="portrait">
+    <meta name="x5-fullscreen" content="true">
+    <meta name="x5-page-mode" content="app">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="screen-orientation" content="portrait|landscape">
+
+    <link rel="stylesheet" href="css/mobile.css">
+    <script src="js/mobile.js"></script>
+    <style>
+        body{
+            padding-top: 1.2rem;
+        }
+        .slideTxtBox .hd {
+            position: fixed;
+            z-index: 99;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: #fff;
+
+            height: 1rem;
+
+            border-bottom: 0.21rem solid #ededed;
+
+        }
+        .slideTxtBox .hd ul{
+            padding: 0 .2rem;
+        }
+
+        .slideTxtBox .hd ul li {
+            font-size: .3rem;
+            color: #1a1a1a;
+            line-height: 0.94rem;
+            padding-bottom: .06rem;
+        }
+
+        .slideTxtBox .hd ul li.on {
+            line-height: 0.94rem;
+            padding-bottom: 0;
+            border-bottom: .06rem solid #1084e6;
+            color: #1084e6;
+        }
+        .con1-sm{
+            position: relative;
+        }
+        .con1-sm img{
+            width: 100%;
+        }
+        .why-hjx{
+            position: absolute;
+            display: inline-block;
+            height: .9rem;
+            width: 3.4rem;
+            margin-left: -1.7rem;
+            z-index:1;
+            top: 19.37rem;
+            left: 50%;
+
+        }
+        .apply-ul img{
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <div class="slideTxtBox">
+        <div class="hd">
+            <ul class="flex flex-around">
+                <li>产品介绍</li>
+                <li>操作指南</li>
+                <li class="li-zuyi">疑问解答</li>
+                <li>客服服务</li>
+            </ul>
+        </div>
+        <div class="bd">
+            <ul class="apply-ul">
+                <img src="images/v2_gn_img1.jpg" alt="">
+                <img src="images/v2_gn_img2.jpg" alt="">
+                <img src="images/v2_gn_img3.jpg" alt="">
+
+            </ul>
+            <ul>
+
+                <div class="con1-sm">
+                    <a class="why-hjx" href="javascript:;">&nbsp;&nbsp;</a>
+
+                    <img src="images/v1_shuoming.jpg" alt="">
+                </div>
+
+            </ul>
+            <ul>
+                <div class="con1-sm">
+                    <img src="images/v1_zuyi.jpg" alt="">
+                </div>
+            </ul>
+            <ul>
+                <div class="con1-sm">
+                    <img src="images/v1_kefu.jpg" alt="">
+                </div>
+                
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+<script src="js/jquery.2.1.min.js"></script>
+<script src="js/jquery.SuperSlide.2.1.1.js"></script>
+
+    <script type="text/javascript">
+    console.log('heloo');
+    $(function () {
+        var url = location.href;
+        var urlarr = url.split('=');
+        jQuery(".slideTxtBox").slide({
+            trigger: "click",
+            defaultIndex: urlarr[1]
+        });
+
+        console.log('001');
+        $('.hd li').on('click', function(){
+//            $('.li-zuyi').click();
+            $(window).scrollTop(0);
+            console.log('002');
+        })
+
+        $('.why-hjx').on('click', function(){
+            $('.li-zuyi').click();
+            $(window).scrollTop(0);
+            console.log('003');
+        })
+    })
+</script>
+</body>
+</html>

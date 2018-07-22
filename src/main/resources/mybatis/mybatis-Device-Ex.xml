@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 2018/5/7 星期一 14:47:50 Lynn Li created. -->
+
+<mapper namespace="cn.com.czcb.dao.IDeviceDao">
+
+    <select id="queryUserInfoCount" parameterType="cn.com.czcb.dao.QueryParams"
+      resultType="int">
+        SELECT count(*) FROM (SELECT nick_name,create_time
+        FROM user u left join user_device ud on u.id = ud.user_id left join device d on d.id = ud.device_id  GROUP BY u.id) a
+        <where>
+            1=1
+            <if test="nickName!=null and nickName!=''">
+                AND nick_name = #{nickName}
+            </if>
+            <if test="startTime != null and startTime !='' and endTime != null and endTime != ''">
+                AND create_time BETWEEN #{startTime} AND #{endTime}
+            </if>
+        </where>
+    </select>
+
+    <select id="queryUserInfoList" parameterType="cn.com.czcb.dao.QueryParams"
+      resultType="cn.com.czcb.dto.UserInfoDto">
+        SELECT u.nick_name nickName, u.id userId, u.openid openId,d.card_no cardNo,d.device_name deviceName,d.match_code matchCode,d.match_time matchTime,u.create_time createTime
+        FROM user u left join user_device ud on u.id = ud.user_id left join device d on d.id = ud.device_id
+        <where>
+            1=1
+            <if test="nickName!=null and nickName!=''">
+                AND u.nick_name = #{nickName}
+            </if>
+            <if test="startTime != null and startTime !='' and endTime != null and endTime != ''">
+                AND u.create_time BETWEEN #{startTime} AND #{endTime}
+            </if>
+        </where>
+        group by u.id
+        ORDER BY u.create_time DESC
+        <if test="__start !=null and __size!=null"><![CDATA[ limit #{__start},#{__size} ]]></if>
+    </select>
+    
+</mapper> 
+
+

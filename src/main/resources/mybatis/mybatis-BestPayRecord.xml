@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 2018/1/25 15:06:04 AJiong created. -->
+
+<mapper namespace="cn.com.czcb.dao.IBestPayRecordDao">
+
+    <resultMap type="cn.com.czcb.model.BestPayRecord" id="resultMap">
+        <id property="id" column="id" />
+        <result property="orderId" column="order_id" />
+        <result property="uptranSeq" column="uptran_seq" />
+        <result property="merchantId" column="merchant_id" />
+        <result property="tranDate" column="tran_date" />
+        <result property="retnInfo" column="retn_info" />
+        <result property="retnCode" column="retn_code" />
+        <result property="orderReqTranSeq" column="order_req_tran_seq" />
+        <result property="orderAmount" column="order_amount" />
+        <result property="productAmount" column="product_amount" />
+        <result property="attachAmount" column="attach_amount" />
+        <result property="curType" column="cur_type" />
+        <result property="encodeType" column="encode_type" />
+        <result property="bankId" column="bank_id" />
+        <result property="attach" column="attach" />
+        <result property="upReqTranSeq" column="up_req_tran_seq" />
+        <result property="upBankTranSeq" column="up_bank_tran_seq" />
+        <result property="productNo" column="product_no" />
+        <result property="signInfo" column="sign_info" />
+    </resultMap>
+
+    <sql id="baseCol">
+        id, order_id, uptran_seq, merchant_id, tran_date, retn_info, retn_code, order_req_tran_seq, order_amount, product_amount, attach_amount, cur_type, encode_type, bank_id, attach, up_req_tran_seq, up_bank_tran_seq, product_no, sign_info
+    </sql>
+	
+	<sql id="pageSql">
+    	<if test="__start !=null and __size!=null"><![CDATA[ limit #{__start},#{__size} ]]></if>
+    </sql>
+	
+    <sql id="whereSql">
+        <trim prefix="WHERE" prefixOverrides="and |or ">
+            <if test="id != null"><![CDATA[ and id = #{id} ]]></if>
+            <if test="id_enum != null">
+                <![CDATA[ and id in ]]>
+                <foreach collection="id_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="orderId != null"><![CDATA[ and order_id = #{orderId} ]]></if>
+            <if test="orderId_enum != null">
+                <![CDATA[ and order_id in ]]>
+                <foreach collection="orderId_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="uptranSeq != null"><![CDATA[ and uptran_seq = #{uptranSeq} ]]></if>
+            <if test="uptranSeq_enum != null">
+                <![CDATA[ and uptran_seq in ]]>
+                <foreach collection="uptranSeq_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="merchantId != null"><![CDATA[ and merchant_id = #{merchantId} ]]></if>
+            <if test="merchantId_enum != null">
+                <![CDATA[ and merchant_id in ]]>
+                <foreach collection="merchantId_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="tranDate != null"><![CDATA[ and tran_date = #{tranDate} ]]></if>
+            <if test="tranDate_enum != null">
+                <![CDATA[ and tran_date in ]]>
+                <foreach collection="tranDate_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="retnInfo != null"><![CDATA[ and retn_info = #{retnInfo} ]]></if>
+            <if test="retnInfo_enum != null">
+                <![CDATA[ and retn_info in ]]>
+                <foreach collection="retnInfo_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="retnCode != null"><![CDATA[ and retn_code = #{retnCode} ]]></if>
+            <if test="retnCode_enum != null">
+                <![CDATA[ and retn_code in ]]>
+                <foreach collection="retnCode_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="orderReqTranSeq != null"><![CDATA[ and order_req_tran_seq = #{orderReqTranSeq} ]]></if>
+            <if test="orderReqTranSeq_enum != null">
+                <![CDATA[ and order_req_tran_seq in ]]>
+                <foreach collection="orderReqTranSeq_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="orderAmount != null"><![CDATA[ and order_amount = #{orderAmount} ]]></if>
+            <if test="orderAmount_enum != null">
+                <![CDATA[ and order_amount in ]]>
+                <foreach collection="orderAmount_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="productAmount != null"><![CDATA[ and product_amount = #{productAmount} ]]></if>
+            <if test="productAmount_enum != null">
+                <![CDATA[ and product_amount in ]]>
+                <foreach collection="productAmount_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="attachAmount != null"><![CDATA[ and attach_amount = #{attachAmount} ]]></if>
+            <if test="attachAmount_enum != null">
+                <![CDATA[ and attach_amount in ]]>
+                <foreach collection="attachAmount_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="curType != null"><![CDATA[ and cur_type = #{curType} ]]></if>
+            <if test="curType_enum != null">
+                <![CDATA[ and cur_type in ]]>
+                <foreach collection="curType_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="encodeType != null"><![CDATA[ and encode_type = #{encodeType} ]]></if>
+            <if test="encodeType_enum != null">
+                <![CDATA[ and encode_type in ]]>
+                <foreach collection="encodeType_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="bankId != null"><![CDATA[ and bank_id = #{bankId} ]]></if>
+            <if test="bankId_enum != null">
+                <![CDATA[ and bank_id in ]]>
+                <foreach collection="bankId_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="attach != null"><![CDATA[ and attach = #{attach} ]]></if>
+            <if test="attach_enum != null">
+                <![CDATA[ and attach in ]]>
+                <foreach collection="attach_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="upReqTranSeq != null"><![CDATA[ and up_req_tran_seq = #{upReqTranSeq} ]]></if>
+            <if test="upReqTranSeq_enum != null">
+                <![CDATA[ and up_req_tran_seq in ]]>
+                <foreach collection="upReqTranSeq_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="upBankTranSeq != null"><![CDATA[ and up_bank_tran_seq = #{upBankTranSeq} ]]></if>
+            <if test="upBankTranSeq_enum != null">
+                <![CDATA[ and up_bank_tran_seq in ]]>
+                <foreach collection="upBankTranSeq_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="productNo != null"><![CDATA[ and product_no = #{productNo} ]]></if>
+            <if test="productNo_enum != null">
+                <![CDATA[ and product_no in ]]>
+                <foreach collection="productNo_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="signInfo != null"><![CDATA[ and sign_info = #{signInfo} ]]></if>
+            <if test="signInfo_enum != null">
+                <![CDATA[ and sign_info in ]]>
+                <foreach collection="signInfo_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="_default_mulattr != null">
+                <![CDATA[ and ]]>
+                <foreach collection="_default_mulattr" item="item" open="(" separator=" or " close=")">
+                    <if test="item.name == 'id'"><![CDATA[ id = #{item.value} ]]></if>
+                    <if test="item.name == 'orderId'"><![CDATA[ order_id = #{item.value} ]]></if>
+                    <if test="item.name == 'uptranSeq'"><![CDATA[ uptran_seq = #{item.value} ]]></if>
+                    <if test="item.name == 'merchantId'"><![CDATA[ merchant_id = #{item.value} ]]></if>
+                    <if test="item.name == 'tranDate'"><![CDATA[ tran_date = #{item.value} ]]></if>
+                    <if test="item.name == 'retnInfo'"><![CDATA[ retn_info = #{item.value} ]]></if>
+                    <if test="item.name == 'retnCode'"><![CDATA[ retn_code = #{item.value} ]]></if>
+                    <if test="item.name == 'orderReqTranSeq'"><![CDATA[ order_req_tran_seq = #{item.value} ]]></if>
+                    <if test="item.name == 'orderAmount'"><![CDATA[ order_amount = #{item.value} ]]></if>
+                    <if test="item.name == 'productAmount'"><![CDATA[ product_amount = #{item.value} ]]></if>
+                    <if test="item.name == 'attachAmount'"><![CDATA[ attach_amount = #{item.value} ]]></if>
+                    <if test="item.name == 'curType'"><![CDATA[ cur_type = #{item.value} ]]></if>
+                    <if test="item.name == 'encodeType'"><![CDATA[ encode_type = #{item.value} ]]></if>
+                    <if test="item.name == 'bankId'"><![CDATA[ bank_id = #{item.value} ]]></if>
+                    <if test="item.name == 'attach'"><![CDATA[ attach = #{item.value} ]]></if>
+                    <if test="item.name == 'upReqTranSeq'"><![CDATA[ up_req_tran_seq = #{item.value} ]]></if>
+                    <if test="item.name == 'upBankTranSeq'"><![CDATA[ up_bank_tran_seq = #{item.value} ]]></if>
+                    <if test="item.name == 'productNo'"><![CDATA[ product_no = #{item.value} ]]></if>
+                    <if test="item.name == 'signInfo'"><![CDATA[ sign_info = #{item.value} ]]></if>
+                </foreach>
+            </if>
+        </trim>
+    </sql>
+
+    <sql id="orderSql">
+        <trim prefix="ORDER BY" suffixOverrides=",">
+            <if test="_orderBy == 'id_desc'"><![CDATA[ id desc, ]]></if>
+            <if test="_orderBy == 'id_asc'"><![CDATA[ id, ]]></if>
+            <if test="_orderBy == 'orderId_desc'"><![CDATA[ order_id desc, ]]></if>
+            <if test="_orderBy == 'orderId_asc'"><![CDATA[ order_id, ]]></if>
+            <if test="_orderBy == 'uptranSeq_desc'"><![CDATA[ uptran_seq desc, ]]></if>
+            <if test="_orderBy == 'uptranSeq_asc'"><![CDATA[ uptran_seq, ]]></if>
+            <if test="_orderBy == 'merchantId_desc'"><![CDATA[ merchant_id desc, ]]></if>
+            <if test="_orderBy == 'merchantId_asc'"><![CDATA[ merchant_id, ]]></if>
+            <if test="_orderBy == 'tranDate_desc'"><![CDATA[ tran_date desc, ]]></if>
+            <if test="_orderBy == 'tranDate_asc'"><![CDATA[ tran_date, ]]></if>
+            <if test="_orderBy == 'retnInfo_desc'"><![CDATA[ retn_info desc, ]]></if>
+            <if test="_orderBy == 'retnInfo_asc'"><![CDATA[ retn_info, ]]></if>
+            <if test="_orderBy == 'retnCode_desc'"><![CDATA[ retn_code desc, ]]></if>
+            <if test="_orderBy == 'retnCode_asc'"><![CDATA[ retn_code, ]]></if>
+            <if test="_orderBy == 'orderReqTranSeq_desc'"><![CDATA[ order_req_tran_seq desc, ]]></if>
+            <if test="_orderBy == 'orderReqTranSeq_asc'"><![CDATA[ order_req_tran_seq, ]]></if>
+            <if test="_orderBy == 'orderAmount_desc'"><![CDATA[ order_amount desc, ]]></if>
+            <if test="_orderBy == 'orderAmount_asc'"><![CDATA[ order_amount, ]]></if>
+            <if test="_orderBy == 'productAmount_desc'"><![CDATA[ product_amount desc, ]]></if>
+            <if test="_orderBy == 'productAmount_asc'"><![CDATA[ product_amount, ]]></if>
+            <if test="_orderBy == 'attachAmount_desc'"><![CDATA[ attach_amount desc, ]]></if>
+            <if test="_orderBy == 'attachAmount_asc'"><![CDATA[ attach_amount, ]]></if>
+            <if test="_orderBy == 'curType_desc'"><![CDATA[ cur_type desc, ]]></if>
+            <if test="_orderBy == 'curType_asc'"><![CDATA[ cur_type, ]]></if>
+            <if test="_orderBy == 'encodeType_desc'"><![CDATA[ encode_type desc, ]]></if>
+            <if test="_orderBy == 'encodeType_asc'"><![CDATA[ encode_type, ]]></if>
+            <if test="_orderBy == 'bankId_desc'"><![CDATA[ bank_id desc, ]]></if>
+            <if test="_orderBy == 'bankId_asc'"><![CDATA[ bank_id, ]]></if>
+            <if test="_orderBy == 'attach_desc'"><![CDATA[ attach desc, ]]></if>
+            <if test="_orderBy == 'attach_asc'"><![CDATA[ attach, ]]></if>
+            <if test="_orderBy == 'upReqTranSeq_desc'"><![CDATA[ up_req_tran_seq desc, ]]></if>
+            <if test="_orderBy == 'upReqTranSeq_asc'"><![CDATA[ up_req_tran_seq, ]]></if>
+            <if test="_orderBy == 'upBankTranSeq_desc'"><![CDATA[ up_bank_tran_seq desc, ]]></if>
+            <if test="_orderBy == 'upBankTranSeq_asc'"><![CDATA[ up_bank_tran_seq, ]]></if>
+            <if test="_orderBy == 'productNo_desc'"><![CDATA[ product_no desc, ]]></if>
+            <if test="_orderBy == 'productNo_asc'"><![CDATA[ product_no, ]]></if>
+            <if test="_orderBy == 'signInfo_desc'"><![CDATA[ sign_info desc, ]]></if>
+            <if test="_orderBy == 'signInfo_asc'"><![CDATA[ sign_info, ]]></if>
+
+			<if test="_orderBy_enum != null">
+				<foreach collection="_orderBy_enum" item="orderItem" open="" separator="," close="">
+					<if test="orderItem == 'id_desc'"><![CDATA[ id desc ]]></if>
+					<if test="orderItem == 'id_asc'"><![CDATA[ id ]]></if>
+					<if test="orderItem == 'orderId_desc'"><![CDATA[ order_id desc ]]></if>
+					<if test="orderItem == 'orderId_asc'"><![CDATA[ order_id ]]></if>
+					<if test="orderItem == 'uptranSeq_desc'"><![CDATA[ uptran_seq desc ]]></if>
+					<if test="orderItem == 'uptranSeq_asc'"><![CDATA[ uptran_seq ]]></if>
+					<if test="orderItem == 'merchantId_desc'"><![CDATA[ merchant_id desc ]]></if>
+					<if test="orderItem == 'merchantId_asc'"><![CDATA[ merchant_id ]]></if>
+					<if test="orderItem == 'tranDate_desc'"><![CDATA[ tran_date desc ]]></if>
+					<if test="orderItem == 'tranDate_asc'"><![CDATA[ tran_date ]]></if>
+					<if test="orderItem == 'retnInfo_desc'"><![CDATA[ retn_info desc ]]></if>
+					<if test="orderItem == 'retnInfo_asc'"><![CDATA[ retn_info ]]></if>
+					<if test="orderItem == 'retnCode_desc'"><![CDATA[ retn_code desc ]]></if>
+					<if test="orderItem == 'retnCode_asc'"><![CDATA[ retn_code ]]></if>
+					<if test="orderItem == 'orderReqTranSeq_desc'"><![CDATA[ order_req_tran_seq desc ]]></if>
+					<if test="orderItem == 'orderReqTranSeq_asc'"><![CDATA[ order_req_tran_seq ]]></if>
+					<if test="orderItem == 'orderAmount_desc'"><![CDATA[ order_amount desc ]]></if>
+					<if test="orderItem == 'orderAmount_asc'"><![CDATA[ order_amount ]]></if>
+					<if test="orderItem == 'productAmount_desc'"><![CDATA[ product_amount desc ]]></if>
+					<if test="orderItem == 'productAmount_asc'"><![CDATA[ product_amount ]]></if>
+					<if test="orderItem == 'attachAmount_desc'"><![CDATA[ attach_amount desc ]]></if>
+					<if test="orderItem == 'attachAmount_asc'"><![CDATA[ attach_amount ]]></if>
+					<if test="orderItem == 'curType_desc'"><![CDATA[ cur_type desc ]]></if>
+					<if test="orderItem == 'curType_asc'"><![CDATA[ cur_type ]]></if>
+					<if test="orderItem == 'encodeType_desc'"><![CDATA[ encode_type desc ]]></if>
+					<if test="orderItem == 'encodeType_asc'"><![CDATA[ encode_type ]]></if>
+					<if test="orderItem == 'bankId_desc'"><![CDATA[ bank_id desc ]]></if>
+					<if test="orderItem == 'bankId_asc'"><![CDATA[ bank_id ]]></if>
+					<if test="orderItem == 'attach_desc'"><![CDATA[ attach desc ]]></if>
+					<if test="orderItem == 'attach_asc'"><![CDATA[ attach ]]></if>
+					<if test="orderItem == 'upReqTranSeq_desc'"><![CDATA[ up_req_tran_seq desc ]]></if>
+					<if test="orderItem == 'upReqTranSeq_asc'"><![CDATA[ up_req_tran_seq ]]></if>
+					<if test="orderItem == 'upBankTranSeq_desc'"><![CDATA[ up_bank_tran_seq desc ]]></if>
+					<if test="orderItem == 'upBankTranSeq_asc'"><![CDATA[ up_bank_tran_seq ]]></if>
+					<if test="orderItem == 'productNo_desc'"><![CDATA[ product_no desc ]]></if>
+					<if test="orderItem == 'productNo_asc'"><![CDATA[ product_no ]]></if>
+					<if test="orderItem == 'signInfo_desc'"><![CDATA[ sign_info desc ]]></if>
+					<if test="orderItem == 'signInfo_asc'"><![CDATA[ sign_info ]]></if>
+					
+				</foreach>
+			</if>
+        </trim>
+    </sql>
+	
+	<sql id="updateSetSql">
+        <trim prefix="set" prefixOverrides="and">
+            <if test="orderId != null"><![CDATA[ and order_id = #{orderId} ]]></if>
+            <if test="uptranSeq != null"><![CDATA[ and uptran_seq = #{uptranSeq} ]]></if>
+            <if test="merchantId != null"><![CDATA[ and merchant_id = #{merchantId} ]]></if>
+            <if test="tranDate != null"><![CDATA[ and tran_date = #{tranDate} ]]></if>
+            <if test="retnInfo != null"><![CDATA[ and retn_info = #{retnInfo} ]]></if>
+            <if test="retnCode != null"><![CDATA[ and retn_code = #{retnCode} ]]></if>
+            <if test="orderReqTranSeq != null"><![CDATA[ and order_req_tran_seq = #{orderReqTranSeq} ]]></if>
+            <if test="orderAmount != null"><![CDATA[ and order_amount = #{orderAmount} ]]></if>
+            <if test="productAmount != null"><![CDATA[ and product_amount = #{productAmount} ]]></if>
+            <if test="attachAmount != null"><![CDATA[ and attach_amount = #{attachAmount} ]]></if>
+            <if test="curType != null"><![CDATA[ and cur_type = #{curType} ]]></if>
+            <if test="encodeType != null"><![CDATA[ and encode_type = #{encodeType} ]]></if>
+            <if test="bankId != null"><![CDATA[ and bank_id = #{bankId} ]]></if>
+            <if test="attach != null"><![CDATA[ and attach = #{attach} ]]></if>
+            <if test="upReqTranSeq != null"><![CDATA[ and up_req_tran_seq = #{upReqTranSeq} ]]></if>
+            <if test="upBankTranSeq != null"><![CDATA[ and up_bank_tran_seq = #{upBankTranSeq} ]]></if>
+            <if test="productNo != null"><![CDATA[ and product_no = #{productNo} ]]></if>
+            <if test="signInfo != null"><![CDATA[ and sign_info = #{signInfo} ]]></if>
+        </trim>
+    </sql>	
+
+    <insert id="insertObject" parameterType="cn.com.czcb.model.BestPayRecord">
+        insert into
+        best_pay_record(id,order_id,uptran_seq,merchant_id,tran_date,retn_info,retn_code,order_req_tran_seq,order_amount,product_amount,attach_amount,cur_type,encode_type,bank_id,attach,up_req_tran_seq,up_bank_tran_seq,product_no,sign_info)
+        values(#{id},#{orderId},#{uptranSeq},#{merchantId},#{tranDate},#{retnInfo},#{retnCode},#{orderReqTranSeq},#{orderAmount},#{productAmount},#{attachAmount},#{curType},#{encodeType},#{bankId},#{attach},#{upReqTranSeq},#{upBankTranSeq},#{productNo},#{signInfo});
+    </insert>
+
+    <update id="updateObject" parameterType="cn.com.czcb.model.BestPayRecord">
+        update best_pay_record
+        set order_id=#{orderId},uptran_seq=#{uptranSeq},merchant_id=#{merchantId},tran_date=#{tranDate},retn_info=#{retnInfo},retn_code=#{retnCode},order_req_tran_seq=#{orderReqTranSeq},order_amount=#{orderAmount},product_amount=#{productAmount},attach_amount=#{attachAmount},cur_type=#{curType},encode_type=#{encodeType},bank_id=#{bankId},attach=#{attach},up_req_tran_seq=#{upReqTranSeq},up_bank_tran_seq=#{upBankTranSeq},product_no=#{productNo},sign_info=#{signInfo}
+        where id=#{id};
+    </update>
+	
+	<update id="updateObjectByFields" parameterType="java.util.Map">
+        update best_pay_record
+        <include refid="updateSetSql" />
+        where id=#{id};
+    </update>
+
+    <delete id="deleteObject" parameterType="string">
+        delete from best_pay_record where id=#{id};
+    </delete>
+
+    <delete id="deleteObjectByWhere" parameterType="cn.com.czcb.dao.QueryParams">
+        delete from best_pay_record
+        <include refid="whereSql" />
+    </delete>
+
+    <select id="getBaseObject" parameterType="string" resultMap="resultMap">
+        select 
+        <include refid="baseCol" />
+        from best_pay_record where id=#{id};
+    </select>
+
+    <select id="getDetailObject" parameterType="string" resultMap="resultMap">
+        select * from best_pay_record where id=#{id};
+    </select>
+
+    <select id="queryCount" parameterType="cn.com.czcb.dao.QueryParams" resultType="int">
+        select count(*) from best_pay_record
+          <include refid="whereSql" />
+    </select>
+
+    <select id="queryBaseList" parameterType="cn.com.czcb.dao.QueryParams" resultMap="resultMap">
+        select 
+        <include refid="baseCol" />
+        from best_pay_record
+            <include refid="whereSql" />
+          <include refid="orderSql" />
+        <include refid="pageSql" />
+    </select>
+
+    <select id="queryDetailList" parameterType="cn.com.czcb.dao.QueryParams" resultMap="resultMap">
+        select * from best_pay_record
+            <include refid="whereSql" />
+          <include refid="orderSql" />
+        <include refid="pageSql" />
+    </select>
+</mapper> 
+
+

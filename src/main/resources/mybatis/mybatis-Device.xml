@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 2018/5/7 星期一 14:47:50 Cron created. -->
+
+<mapper namespace="cn.com.czcb.dao.IDeviceDao">
+
+    <resultMap type="cn.com.czcb.model.Device" id="resultMap">
+        <id property="id" column="id" />
+        <result property="matchCode" column="match_code" />
+        <result property="deviceName" column="device_name" />
+        <result property="cardNo" column="card_no" />
+        <result property="matchTime" column="match_time" />
+    </resultMap>
+
+    <sql id="baseCol">
+        id, match_code, device_name, card_no, match_time
+    </sql>
+	
+	<sql id="pageSql">
+    	<if test="__start !=null and __size!=null"><![CDATA[ limit #{__start},#{__size} ]]></if>
+    </sql>
+	
+    <sql id="whereSql">
+        <trim prefix="WHERE" prefixOverrides="and |or ">
+            <if test="id != null"><![CDATA[ and id = #{id} ]]></if>
+            <if test="id_enum != null">
+                <![CDATA[ and id in ]]>
+                <foreach collection="id_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="matchCode != null"><![CDATA[ and match_code = #{matchCode} ]]></if>
+            <if test="matchCode_enum != null">
+                <![CDATA[ and match_code in ]]>
+                <foreach collection="matchCode_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="deviceName != null"><![CDATA[ and device_name = #{deviceName} ]]></if>
+            <if test="deviceName_enum != null">
+                <![CDATA[ and device_name in ]]>
+                <foreach collection="deviceName_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="cardNo != null"><![CDATA[ and card_no = #{cardNo} ]]></if>
+            <if test="cardNo_enum != null">
+                <![CDATA[ and card_no in ]]>
+                <foreach collection="cardNo_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="matchTime != null"><![CDATA[ and match_time = #{matchTime} ]]></if>
+            <if test="matchTime_r_min != null"><![CDATA[ and match_time >= #{matchTime_r_min} and match_time <= #{matchTime_r_max} ]]></if>
+            <if test="matchTime_enum != null">
+                <![CDATA[ and match_time in ]]>
+                <foreach collection="matchTime_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="_default_mulattr != null">
+                <![CDATA[ and ]]>
+                <foreach collection="_default_mulattr" item="item" open="(" separator=" or " close=")">
+                    <if test="item.name == 'id'"><![CDATA[ id = #{item.value} ]]></if>
+                    <if test="item.name == 'matchCode'"><![CDATA[ match_code = #{item.value} ]]></if>
+                    <if test="item.name == 'deviceName'"><![CDATA[ device_name = #{item.value} ]]></if>
+                    <if test="item.name == 'cardNo'"><![CDATA[ card_no = #{item.value} ]]></if>
+                </foreach>
+            </if>
+        </trim>
+    </sql>
+
+    <sql id="orderSql">
+        <trim prefix="ORDER BY" suffixOverrides=",">
+            <if test="_orderBy == 'id_desc'"><![CDATA[ id desc, ]]></if>
+            <if test="_orderBy == 'id_asc'"><![CDATA[ id, ]]></if>
+            <if test="_orderBy == 'matchCode_desc'"><![CDATA[ match_code desc, ]]></if>
+            <if test="_orderBy == 'matchCode_asc'"><![CDATA[ match_code, ]]></if>
+            <if test="_orderBy == 'deviceName_desc'"><![CDATA[ device_name desc, ]]></if>
+            <if test="_orderBy == 'deviceName_asc'"><![CDATA[ device_name, ]]></if>
+            <if test="_orderBy == 'cardNo_desc'"><![CDATA[ card_no desc, ]]></if>
+            <if test="_orderBy == 'cardNo_asc'"><![CDATA[ card_no, ]]></if>
+            <if test="_orderBy == 'matchTime_desc'"><![CDATA[ match_time desc, ]]></if>
+            <if test="_orderBy == 'matchTime_asc'"><![CDATA[ match_time, ]]></if>
+
+			<if test="_orderBy_enum != null">
+				<foreach collection="_orderBy_enum" item="orderItem" open="" separator="," close="">
+					<if test="orderItem == 'id_desc'"><![CDATA[ id desc ]]></if>
+					<if test="orderItem == 'id_asc'"><![CDATA[ id ]]></if>
+					<if test="orderItem == 'matchCode_desc'"><![CDATA[ match_code desc ]]></if>
+					<if test="orderItem == 'matchCode_asc'"><![CDATA[ match_code ]]></if>
+					<if test="orderItem == 'deviceName_desc'"><![CDATA[ device_name desc ]]></if>
+					<if test="orderItem == 'deviceName_asc'"><![CDATA[ device_name ]]></if>
+					<if test="orderItem == 'cardNo_desc'"><![CDATA[ card_no desc ]]></if>
+					<if test="orderItem == 'cardNo_asc'"><![CDATA[ card_no ]]></if>
+					<if test="orderItem == 'matchTime_desc'"><![CDATA[ match_time desc ]]></if>
+					<if test="orderItem == 'matchTime_asc'"><![CDATA[ match_time ]]></if>
+					
+				</foreach>
+			</if>
+        </trim>
+    </sql>
+	
+	<sql id="updateSetSql">
+        <trim prefix="set" prefixOverrides="and">
+            <if test="matchCode != null"><![CDATA[ and match_code = #{matchCode} ]]></if>
+            <if test="deviceName != null"><![CDATA[ and device_name = #{deviceName} ]]></if>
+            <if test="cardNo != null"><![CDATA[ and card_no = #{cardNo} ]]></if>
+            <if test="matchTime != null"><![CDATA[ and match_time = #{matchTime} ]]></if>
+        </trim>
+    </sql>	
+
+    <insert id="insertObject" parameterType="cn.com.czcb.model.Device">
+        insert into
+        device(id,match_code,device_name,card_no,match_time)
+        values(#{id},#{matchCode},#{deviceName},#{cardNo},#{matchTime});
+    </insert>
+
+    <update id="updateObject" parameterType="cn.com.czcb.model.Device">
+        update device
+        set match_code=#{matchCode},device_name=#{deviceName},card_no=#{cardNo},match_time=#{matchTime}
+        where id=#{id};
+    </update>
+	
+	<update id="updateObjectByFields" parameterType="java.util.Map">
+        update device
+        <include refid="updateSetSql" />
+        where id=#{id};
+    </update>
+
+    <delete id="deleteObject" parameterType="string">
+        delete from device where id=#{id};
+    </delete>
+
+    <delete id="deleteObjectByWhere" parameterType="cn.com.czcb.dao.QueryParams">
+        delete from device
+        <include refid="whereSql" />
+    </delete>
+
+    <select id="getBaseObject" parameterType="string" resultMap="resultMap">
+        select 
+        <include refid="baseCol" />
+        from device where id=#{id};
+    </select>
+
+    <select id="getDetailObject" parameterType="string" resultMap="resultMap">
+        select * from device where id=#{id};
+    </select>
+
+    <select id="queryCount" parameterType="cn.com.czcb.dao.QueryParams" resultType="int">
+        select count(*) from device
+          <include refid="whereSql" />
+    </select>
+
+    <select id="queryBaseList" parameterType="cn.com.czcb.dao.QueryParams" resultMap="resultMap">
+        select 
+        <include refid="baseCol" />
+        from device
+            <include refid="whereSql" />
+          <include refid="orderSql" />
+        <include refid="pageSql" />
+    </select>
+
+    <select id="queryDetailList" parameterType="cn.com.czcb.dao.QueryParams" resultMap="resultMap">
+        select * from device
+            <include refid="whereSql" />
+          <include refid="orderSql" />
+        <include refid="pageSql" />
+    </select>
+
+</mapper> 
+
+

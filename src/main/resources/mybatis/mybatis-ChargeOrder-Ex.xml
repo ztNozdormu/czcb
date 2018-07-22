@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 2018/1/26 15:04:06 AJiong created. -->
+
+<mapper namespace="cn.com.czcb.dao.IChargeOrderDao">
+  <select id="queryUnReadCount" parameterType="cn.com.czcb.dao.QueryParams" resultType="int">
+        select count(1) from charge_order
+        where user_id = #{userId} and create_time > #{createTime} and (status = '1' or status = '2')
+    </select>
+  <select id="queryChargeOrder" parameterType="cn.com.czcb.dao.QueryParams"
+    resultType="cn.com.czcb.dto.ChargeDto">
+    SELECT
+    u.phone,
+    co.card_no,
+    co.charge_num,
+    co.create_time,
+    co.pay_type,
+    wpr.transaction_id
+    FROM
+    charge_order co,
+    wechat_pay_record wpr,
+    USER u
+    WHERE
+    co.id = wpr.out_trade_no
+    AND co.user_id = u.id
+    <if test="phone!=null and phone!=''">
+      AND u.phone = #{phone}
+    </if>
+    <if test="transactionId!=null and transactionId!=''">
+      AND wpr.transaction_id = #{transactionId}
+    </if>
+    <if test="startTime!=null and startTime !='' and endTime!=null and endTime!=''">
+      AND co.createTime between #{startTime} AND #{endTime}
+    </if>
+    ORDER BY co.createTime DESC
+    <if test="__start !=null and __size!=null"><![CDATA[ limit #{__start},#{__size} ]]></if>
+  </select>
+</mapper> 
+
+

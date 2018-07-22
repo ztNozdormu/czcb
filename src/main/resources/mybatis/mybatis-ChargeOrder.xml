@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 2018/2/27 9:23:30 AJiong created. -->
+
+<mapper namespace="cn.com.czcb.dao.IChargeOrderDao">
+
+    <resultMap type="cn.com.czcb.model.ChargeOrder" id="resultMap">
+        <id property="id" column="id" />
+        <result property="userId" column="user_id" />
+        <result property="cardNo" column="card_no" />
+        <result property="chargeNum" column="charge_num" />
+        <result property="serialNum" column="serial_num" />
+        <result property="payType" column="pay_type" />
+        <result property="status" column="status" />
+        <result property="createTime" column="create_time" />
+    </resultMap>
+
+    <sql id="baseCol">
+        id, user_id, card_no, charge_num, serial_num, pay_type, status, create_time
+    </sql>
+	
+	<sql id="pageSql">
+    	<if test="__start !=null and __size!=null"><![CDATA[ limit #{__start},#{__size} ]]></if>
+    </sql>
+	
+    <sql id="whereSql">
+        <trim prefix="WHERE" prefixOverrides="and |or ">
+            <if test="id != null"><![CDATA[ and id = #{id} ]]></if>
+            <if test="id_enum != null">
+                <![CDATA[ and id in ]]>
+                <foreach collection="id_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="userId != null"><![CDATA[ and user_id = #{userId} ]]></if>
+            <if test="userId_enum != null">
+                <![CDATA[ and user_id in ]]>
+                <foreach collection="userId_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="cardNo != null"><![CDATA[ and card_no = #{cardNo} ]]></if>
+            <if test="cardNo_enum != null">
+                <![CDATA[ and card_no in ]]>
+                <foreach collection="cardNo_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="chargeNum != null"><![CDATA[ and charge_num = #{chargeNum} ]]></if>
+            <if test="chargeNum_r_min != null"><![CDATA[ and charge_num >= #{chargeNum_r_min} and charge_num <= #{chargeNum_r_max} ]]></if>
+            <if test="chargeNum_enum != null">
+                <![CDATA[ and charge_num in ]]>
+                <foreach collection="chargeNum_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="serialNum != null"><![CDATA[ and serial_num = #{serialNum} ]]></if>
+            <if test="serialNum_enum != null">
+                <![CDATA[ and serial_num in ]]>
+                <foreach collection="serialNum_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="payType != null"><![CDATA[ and pay_type = #{payType} ]]></if>
+            <if test="payType_r_min != null"><![CDATA[ and pay_type >= #{payType_r_min} and pay_type <= #{payType_r_max} ]]></if>
+            <if test="payType_enum != null">
+                <![CDATA[ and pay_type in ]]>
+                <foreach collection="payType_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="status != null"><![CDATA[ and status = #{status} ]]></if>
+            <if test="status_enum != null">
+                <![CDATA[ and status in ]]>
+                <foreach collection="status_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="createTime != null"><![CDATA[ and create_time = #{createTime} ]]></if>
+            <if test="createTime_r_min != null"><![CDATA[ and create_time >= #{createTime_r_min} and create_time <= #{createTime_r_max} ]]></if>
+            <if test="createTime_enum != null">
+                <![CDATA[ and create_time in ]]>
+                <foreach collection="createTime_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="_default_mulattr != null">
+                <![CDATA[ and ]]>
+                <foreach collection="_default_mulattr" item="item" open="(" separator=" or " close=")">
+                    <if test="item.name == 'id'"><![CDATA[ id = #{item.value} ]]></if>
+                    <if test="item.name == 'userId'"><![CDATA[ user_id = #{item.value} ]]></if>
+                    <if test="item.name == 'cardNo'"><![CDATA[ card_no = #{item.value} ]]></if>
+                    <if test="item.name == 'serialNum'"><![CDATA[ serial_num = #{item.value} ]]></if>
+                    <if test="item.name == 'status'"><![CDATA[ status = #{item.value} ]]></if>
+                </foreach>
+            </if>
+        </trim>
+    </sql>
+
+    <sql id="orderSql">
+        <trim prefix="ORDER BY" suffixOverrides=",">
+            <if test="_orderBy == 'id_desc'"><![CDATA[ id desc, ]]></if>
+            <if test="_orderBy == 'id_asc'"><![CDATA[ id, ]]></if>
+            <if test="_orderBy == 'userId_desc'"><![CDATA[ user_id desc, ]]></if>
+            <if test="_orderBy == 'userId_asc'"><![CDATA[ user_id, ]]></if>
+            <if test="_orderBy == 'cardNo_desc'"><![CDATA[ card_no desc, ]]></if>
+            <if test="_orderBy == 'cardNo_asc'"><![CDATA[ card_no, ]]></if>
+            <if test="_orderBy == 'chargeNum_desc'"><![CDATA[ charge_num desc, ]]></if>
+            <if test="_orderBy == 'chargeNum_asc'"><![CDATA[ charge_num, ]]></if>
+            <if test="_orderBy == 'serialNum_desc'"><![CDATA[ serial_num desc, ]]></if>
+            <if test="_orderBy == 'serialNum_asc'"><![CDATA[ serial_num, ]]></if>
+            <if test="_orderBy == 'payType_desc'"><![CDATA[ pay_type desc, ]]></if>
+            <if test="_orderBy == 'payType_asc'"><![CDATA[ pay_type, ]]></if>
+            <if test="_orderBy == 'status_desc'"><![CDATA[ status desc, ]]></if>
+            <if test="_orderBy == 'status_asc'"><![CDATA[ status, ]]></if>
+            <if test="_orderBy == 'createTime_desc'"><![CDATA[ create_time desc, ]]></if>
+            <if test="_orderBy == 'createTime_asc'"><![CDATA[ create_time, ]]></if>
+
+			<if test="_orderBy_enum != null">
+				<foreach collection="_orderBy_enum" item="orderItem" open="" separator="," close="">
+					<if test="orderItem == 'id_desc'"><![CDATA[ id desc ]]></if>
+					<if test="orderItem == 'id_asc'"><![CDATA[ id ]]></if>
+					<if test="orderItem == 'userId_desc'"><![CDATA[ user_id desc ]]></if>
+					<if test="orderItem == 'userId_asc'"><![CDATA[ user_id ]]></if>
+					<if test="orderItem == 'cardNo_desc'"><![CDATA[ card_no desc ]]></if>
+					<if test="orderItem == 'cardNo_asc'"><![CDATA[ card_no ]]></if>
+					<if test="orderItem == 'chargeNum_desc'"><![CDATA[ charge_num desc ]]></if>
+					<if test="orderItem == 'chargeNum_asc'"><![CDATA[ charge_num ]]></if>
+					<if test="orderItem == 'serialNum_desc'"><![CDATA[ serial_num desc ]]></if>
+					<if test="orderItem == 'serialNum_asc'"><![CDATA[ serial_num ]]></if>
+					<if test="orderItem == 'payType_desc'"><![CDATA[ pay_type desc ]]></if>
+					<if test="orderItem == 'payType_asc'"><![CDATA[ pay_type ]]></if>
+					<if test="orderItem == 'status_desc'"><![CDATA[ status desc ]]></if>
+					<if test="orderItem == 'status_asc'"><![CDATA[ status ]]></if>
+					<if test="orderItem == 'createTime_desc'"><![CDATA[ create_time desc ]]></if>
+					<if test="orderItem == 'createTime_asc'"><![CDATA[ create_time ]]></if>
+					
+				</foreach>
+			</if>
+        </trim>
+    </sql>
+	
+	<sql id="updateSetSql">
+        <trim prefix="set" prefixOverrides="and">
+            <if test="userId != null"><![CDATA[ and user_id = #{userId} ]]></if>
+            <if test="cardNo != null"><![CDATA[ and card_no = #{cardNo} ]]></if>
+            <if test="chargeNum != null"><![CDATA[ and charge_num = #{chargeNum} ]]></if>
+            <if test="serialNum != null"><![CDATA[ and serial_num = #{serialNum} ]]></if>
+            <if test="payType != null"><![CDATA[ and pay_type = #{payType} ]]></if>
+            <if test="status != null"><![CDATA[ and status = #{status} ]]></if>
+            <if test="createTime != null"><![CDATA[ and create_time = #{createTime} ]]></if>
+        </trim>
+    </sql>	
+
+    <insert id="insertObject" parameterType="cn.com.czcb.model.ChargeOrder">
+        insert into
+        charge_order(id,user_id,card_no,charge_num,serial_num,pay_type,status,create_time)
+        values(#{id},#{userId},#{cardNo},#{chargeNum},#{serialNum},#{payType},#{status},#{createTime});
+    </insert>
+
+    <update id="updateObject" parameterType="cn.com.czcb.model.ChargeOrder">
+        update charge_order
+        set user_id=#{userId},card_no=#{cardNo},charge_num=#{chargeNum},serial_num=#{serialNum},pay_type=#{payType},status=#{status},create_time=#{createTime}
+        where id=#{id};
+    </update>
+	
+	<update id="updateObjectByFields" parameterType="java.util.Map">
+        update charge_order
+        <include refid="updateSetSql" />
+        where id=#{id};
+    </update>
+
+    <delete id="deleteObject" parameterType="string">
+        delete from charge_order where id=#{id};
+    </delete>
+
+    <delete id="deleteObjectByWhere" parameterType="cn.com.czcb.dao.QueryParams">
+        delete from charge_order
+        <include refid="whereSql" />
+    </delete>
+
+    <select id="getBaseObject" parameterType="string" resultMap="resultMap">
+        select 
+        <include refid="baseCol" />
+        from charge_order where id=#{id};
+    </select>
+
+    <select id="getDetailObject" parameterType="string" resultMap="resultMap">
+        select * from charge_order where id=#{id};
+    </select>
+
+    <select id="queryCount" parameterType="cn.com.czcb.dao.QueryParams" resultType="int">
+        select count(*) from charge_order
+          <include refid="whereSql" />
+    </select>
+
+    <select id="queryBaseList" parameterType="cn.com.czcb.dao.QueryParams" resultMap="resultMap">
+        select 
+        <include refid="baseCol" />
+        from charge_order
+            <include refid="whereSql" />
+          <include refid="orderSql" />
+        <include refid="pageSql" />
+    </select>
+
+    <select id="queryDetailList" parameterType="cn.com.czcb.dao.QueryParams" resultMap="resultMap">
+        select * from charge_order
+            <include refid="whereSql" />
+          <include refid="orderSql" />
+        <include refid="pageSql" />
+    </select>
+</mapper> 
+
+

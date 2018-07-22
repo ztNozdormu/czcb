@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 2018/2/1 10:27:45 AJiong created. -->
+
+<mapper namespace="cn.com.czcb.dao.IAdminDao">
+
+    <resultMap type="cn.com.czcb.model.Admin" id="resultMap">
+        <id property="id" column="id" />
+        <result property="account" column="account" />
+        <result property="password" column="password" />
+    </resultMap>
+
+    <sql id="baseCol">
+        id, account, password
+    </sql>
+	
+	<sql id="pageSql">
+    	<if test="__start !=null and __size!=null"><![CDATA[ limit #{__start},#{__size} ]]></if>
+    </sql>
+	
+    <sql id="whereSql">
+        <trim prefix="WHERE" prefixOverrides="and |or ">
+            <if test="id != null"><![CDATA[ and id = #{id} ]]></if>
+            <if test="id_enum != null">
+                <![CDATA[ and id in ]]>
+                <foreach collection="id_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="account != null"><![CDATA[ and account = #{account} ]]></if>
+            <if test="account_enum != null">
+                <![CDATA[ and account in ]]>
+                <foreach collection="account_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="password != null"><![CDATA[ and password = #{password} ]]></if>
+            <if test="password_enum != null">
+                <![CDATA[ and password in ]]>
+                <foreach collection="password_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="_default_mulattr != null">
+                <![CDATA[ and ]]>
+                <foreach collection="_default_mulattr" item="item" open="(" separator=" or " close=")">
+                    <if test="item.name == 'id'"><![CDATA[ id = #{item.value} ]]></if>
+                    <if test="item.name == 'account'"><![CDATA[ account = #{item.value} ]]></if>
+                    <if test="item.name == 'password'"><![CDATA[ password = #{item.value} ]]></if>
+                </foreach>
+            </if>
+        </trim>
+    </sql>
+
+    <sql id="orderSql">
+        <trim prefix="ORDER BY" suffixOverrides=",">
+            <if test="_orderBy == 'id_desc'"><![CDATA[ id desc, ]]></if>
+            <if test="_orderBy == 'id_asc'"><![CDATA[ id, ]]></if>
+            <if test="_orderBy == 'account_desc'"><![CDATA[ account desc, ]]></if>
+            <if test="_orderBy == 'account_asc'"><![CDATA[ account, ]]></if>
+            <if test="_orderBy == 'password_desc'"><![CDATA[ password desc, ]]></if>
+            <if test="_orderBy == 'password_asc'"><![CDATA[ password, ]]></if>
+
+			<if test="_orderBy_enum != null">
+				<foreach collection="_orderBy_enum" item="orderItem" open="" separator="," close="">
+					<if test="orderItem == 'id_desc'"><![CDATA[ id desc ]]></if>
+					<if test="orderItem == 'id_asc'"><![CDATA[ id ]]></if>
+					<if test="orderItem == 'account_desc'"><![CDATA[ account desc ]]></if>
+					<if test="orderItem == 'account_asc'"><![CDATA[ account ]]></if>
+					<if test="orderItem == 'password_desc'"><![CDATA[ password desc ]]></if>
+					<if test="orderItem == 'password_asc'"><![CDATA[ password ]]></if>
+					
+				</foreach>
+			</if>
+        </trim>
+    </sql>
+	
+	<sql id="updateSetSql">
+        <trim prefix="set" prefixOverrides="and">
+            <if test="account != null"><![CDATA[ and account = #{account} ]]></if>
+            <if test="password != null"><![CDATA[ and password = #{password} ]]></if>
+        </trim>
+    </sql>	
+
+    <insert id="insertObject" parameterType="cn.com.czcb.model.Admin">
+        insert into
+        admin(id,account,password)
+        values(#{id},#{account},#{password});
+    </insert>
+
+    <update id="updateObject" parameterType="cn.com.czcb.model.Admin">
+        update admin
+        set account=#{account},password=#{password}
+        where id=#{id};
+    </update>
+	
+	<update id="updateObjectByFields" parameterType="java.util.Map">
+        update admin
+        <include refid="updateSetSql" />
+        where id=#{id};
+    </update>
+
+    <delete id="deleteObject" parameterType="string">
+        delete from admin where id=#{id};
+    </delete>
+
+    <delete id="deleteObjectByWhere" parameterType="cn.com.czcb.dao.QueryParams">
+        delete from admin
+        <include refid="whereSql" />
+    </delete>
+
+    <select id="getBaseObject" parameterType="string" resultMap="resultMap">
+        select 
+        <include refid="baseCol" />
+        from admin where id=#{id};
+    </select>
+
+    <select id="getDetailObject" parameterType="string" resultMap="resultMap">
+        select * from admin where id=#{id};
+    </select>
+
+    <select id="queryCount" parameterType="cn.com.czcb.dao.QueryParams" resultType="int">
+        select count(*) from admin
+          <include refid="whereSql" />
+    </select>
+
+    <select id="queryBaseList" parameterType="cn.com.czcb.dao.QueryParams" resultMap="resultMap">
+        select 
+        <include refid="baseCol" />
+        from admin
+            <include refid="whereSql" />
+          <include refid="orderSql" />
+        <include refid="pageSql" />
+    </select>
+
+    <select id="queryDetailList" parameterType="cn.com.czcb.dao.QueryParams" resultMap="resultMap">
+        select * from admin
+            <include refid="whereSql" />
+          <include refid="orderSql" />
+        <include refid="pageSql" />
+    </select>
+</mapper> 
+
+

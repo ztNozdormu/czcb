@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 2018/1/25 17:05:18 AJiong created. -->
+
+<mapper namespace="cn.com.czcb.dao.ISmsCodeDao">
+
+    <resultMap type="cn.com.czcb.model.SmsCode" id="resultMap">
+        <id property="id" column="id" />
+        <result property="phone" column="phone" />
+        <result property="validatCode" column="validat_code" />
+        <result property="validated" column="validated" />
+        <result property="createTime" column="create_time" />
+    </resultMap>
+
+    <sql id="baseCol">
+        id, phone, validat_code, validated, create_time
+    </sql>
+	
+	<sql id="pageSql">
+    	<if test="__start !=null and __size!=null"><![CDATA[ limit #{__start},#{__size} ]]></if>
+    </sql>
+	
+    <sql id="whereSql">
+        <trim prefix="WHERE" prefixOverrides="and |or ">
+            <if test="id != null"><![CDATA[ and id = #{id} ]]></if>
+            <if test="id_enum != null">
+                <![CDATA[ and id in ]]>
+                <foreach collection="id_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="phone != null"><![CDATA[ and phone = #{phone} ]]></if>
+            <if test="phone_enum != null">
+                <![CDATA[ and phone in ]]>
+                <foreach collection="phone_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="validatCode != null"><![CDATA[ and validat_code = #{validatCode} ]]></if>
+            <if test="validatCode_enum != null">
+                <![CDATA[ and validat_code in ]]>
+                <foreach collection="validatCode_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="validated != null"><![CDATA[ and validated = #{validated} ]]></if>
+            <if test="createTime != null"><![CDATA[ and create_time = #{createTime} ]]></if>
+            <if test="createTime_r_min != null"><![CDATA[ and create_time >= #{createTime_r_min} and create_time <= #{createTime_r_max} ]]></if>
+            <if test="createTime_enum != null">
+                <![CDATA[ and create_time in ]]>
+                <foreach collection="createTime_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="_default_mulattr != null">
+                <![CDATA[ and ]]>
+                <foreach collection="_default_mulattr" item="item" open="(" separator=" or " close=")">
+                    <if test="item.name == 'id'"><![CDATA[ id = #{item.value} ]]></if>
+                    <if test="item.name == 'phone'"><![CDATA[ phone = #{item.value} ]]></if>
+                    <if test="item.name == 'validatCode'"><![CDATA[ validat_code = #{item.value} ]]></if>
+                </foreach>
+            </if>
+        </trim>
+    </sql>
+
+    <sql id="orderSql">
+        <trim prefix="ORDER BY" suffixOverrides=",">
+            <if test="_orderBy == 'id_desc'"><![CDATA[ id desc, ]]></if>
+            <if test="_orderBy == 'id_asc'"><![CDATA[ id, ]]></if>
+            <if test="_orderBy == 'phone_desc'"><![CDATA[ phone desc, ]]></if>
+            <if test="_orderBy == 'phone_asc'"><![CDATA[ phone, ]]></if>
+            <if test="_orderBy == 'validatCode_desc'"><![CDATA[ validat_code desc, ]]></if>
+            <if test="_orderBy == 'validatCode_asc'"><![CDATA[ validat_code, ]]></if>
+            <if test="_orderBy == 'validated_desc'"><![CDATA[ validated desc, ]]></if>
+            <if test="_orderBy == 'validated_asc'"><![CDATA[ validated, ]]></if>
+            <if test="_orderBy == 'createTime_desc'"><![CDATA[ create_time desc, ]]></if>
+            <if test="_orderBy == 'createTime_asc'"><![CDATA[ create_time, ]]></if>
+
+			<if test="_orderBy_enum != null">
+				<foreach collection="_orderBy_enum" item="orderItem" open="" separator="," close="">
+					<if test="orderItem == 'id_desc'"><![CDATA[ id desc ]]></if>
+					<if test="orderItem == 'id_asc'"><![CDATA[ id ]]></if>
+					<if test="orderItem == 'phone_desc'"><![CDATA[ phone desc ]]></if>
+					<if test="orderItem == 'phone_asc'"><![CDATA[ phone ]]></if>
+					<if test="orderItem == 'validatCode_desc'"><![CDATA[ validat_code desc ]]></if>
+					<if test="orderItem == 'validatCode_asc'"><![CDATA[ validat_code ]]></if>
+					<if test="orderItem == 'validated_desc'"><![CDATA[ validated desc ]]></if>
+					<if test="orderItem == 'validated_asc'"><![CDATA[ validated ]]></if>
+					<if test="orderItem == 'createTime_desc'"><![CDATA[ create_time desc ]]></if>
+					<if test="orderItem == 'createTime_asc'"><![CDATA[ create_time ]]></if>
+					
+				</foreach>
+			</if>
+        </trim>
+    </sql>
+	
+	<sql id="updateSetSql">
+        <trim prefix="set" prefixOverrides="and">
+            <if test="phone != null"><![CDATA[ and phone = #{phone} ]]></if>
+            <if test="validatCode != null"><![CDATA[ and validat_code = #{validatCode} ]]></if>
+            <if test="validated != null"><![CDATA[ and validated = #{validated} ]]></if>
+            <if test="createTime != null"><![CDATA[ and create_time = #{createTime} ]]></if>
+        </trim>
+    </sql>	
+
+    <insert id="insertObject" parameterType="cn.com.czcb.model.SmsCode">
+        insert into
+        sms_code(id,phone,validat_code,validated,create_time)
+        values(#{id},#{phone},#{validatCode},#{validated},#{createTime});
+    </insert>
+
+    <update id="updateObject" parameterType="cn.com.czcb.model.SmsCode">
+        update sms_code
+        set phone=#{phone},validat_code=#{validatCode},validated=#{validated},create_time=#{createTime}
+        where id=#{id};
+    </update>
+	
+	<update id="updateObjectByFields" parameterType="java.util.Map">
+        update sms_code
+        <include refid="updateSetSql" />
+        where id=#{id};
+    </update>
+
+    <delete id="deleteObject" parameterType="string">
+        delete from sms_code where id=#{id};
+    </delete>
+
+    <delete id="deleteObjectByWhere" parameterType="cn.com.czcb.dao.QueryParams">
+        delete from sms_code
+        <include refid="whereSql" />
+    </delete>
+
+    <select id="getBaseObject" parameterType="string" resultMap="resultMap">
+        select 
+        <include refid="baseCol" />
+        from sms_code where id=#{id};
+    </select>
+
+    <select id="getDetailObject" parameterType="string" resultMap="resultMap">
+        select * from sms_code where id=#{id};
+    </select>
+
+    <select id="queryCount" parameterType="cn.com.czcb.dao.QueryParams" resultType="int">
+        select count(*) from sms_code
+          <include refid="whereSql" />
+    </select>
+
+    <select id="queryBaseList" parameterType="cn.com.czcb.dao.QueryParams" resultMap="resultMap">
+        select 
+        <include refid="baseCol" />
+        from sms_code
+            <include refid="whereSql" />
+          <include refid="orderSql" />
+        <include refid="pageSql" />
+    </select>
+
+    <select id="queryDetailList" parameterType="cn.com.czcb.dao.QueryParams" resultMap="resultMap">
+        select * from sms_code
+            <include refid="whereSql" />
+          <include refid="orderSql" />
+        <include refid="pageSql" />
+    </select>
+</mapper> 
+
+

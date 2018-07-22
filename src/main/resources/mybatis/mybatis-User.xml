@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 2018/1/25 15:06:07 AJiong created. -->
+
+<mapper namespace="cn.com.czcb.dao.IUserDao">
+
+    <resultMap type="cn.com.czcb.model.User" id="resultMap">
+        <id property="id" column="id" />
+        <result property="openid" column="openid" />
+        <result property="unionid" column="unionid" />
+        <result property="nickName" column="nick_name" />
+        <result property="phone" column="phone" />
+        <result property="avatarUrl" column="avatar_url" />
+        <result property="gender" column="gender" />
+        <result property="city" column="city" />
+        <result property="province" column="province" />
+        <result property="country" column="country" />
+        <result property="language" column="language" />
+        <result property="updateTime" column="update_time" />
+        <result property="createTime" column="create_time" />
+        <result property="remark" column="remark" />
+    </resultMap>
+
+    <sql id="baseCol">
+        id, openid, unionid, nick_name, phone, avatar_url, gender, city, province, country, language, update_time, create_time, remark
+    </sql>
+	
+	<sql id="pageSql">
+    	<if test="__start !=null and __size!=null"><![CDATA[ limit #{__start},#{__size} ]]></if>
+    </sql>
+	
+    <sql id="whereSql">
+        <trim prefix="WHERE" prefixOverrides="and |or ">
+            <if test="id != null"><![CDATA[ and id = #{id} ]]></if>
+            <if test="id_enum != null">
+                <![CDATA[ and id in ]]>
+                <foreach collection="id_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="openid != null"><![CDATA[ and openid = #{openid} ]]></if>
+            <if test="openid_enum != null">
+                <![CDATA[ and openid in ]]>
+                <foreach collection="openid_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="unionid != null"><![CDATA[ and unionid = #{unionid} ]]></if>
+            <if test="unionid_enum != null">
+                <![CDATA[ and unionid in ]]>
+                <foreach collection="unionid_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="nickName != null"><![CDATA[ and nick_name = #{nickName} ]]></if>
+            <if test="nickName_enum != null">
+                <![CDATA[ and nick_name in ]]>
+                <foreach collection="nickName_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="phone != null"><![CDATA[ and phone = #{phone} ]]></if>
+            <if test="phone_enum != null">
+                <![CDATA[ and phone in ]]>
+                <foreach collection="phone_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="avatarUrl != null"><![CDATA[ and avatar_url = #{avatarUrl} ]]></if>
+            <if test="avatarUrl_enum != null">
+                <![CDATA[ and avatar_url in ]]>
+                <foreach collection="avatarUrl_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="gender != null"><![CDATA[ and gender = #{gender} ]]></if>
+            <if test="gender_enum != null">
+                <![CDATA[ and gender in ]]>
+                <foreach collection="gender_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="city != null"><![CDATA[ and city = #{city} ]]></if>
+            <if test="city_enum != null">
+                <![CDATA[ and city in ]]>
+                <foreach collection="city_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="province != null"><![CDATA[ and province = #{province} ]]></if>
+            <if test="province_enum != null">
+                <![CDATA[ and province in ]]>
+                <foreach collection="province_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="country != null"><![CDATA[ and country = #{country} ]]></if>
+            <if test="country_enum != null">
+                <![CDATA[ and country in ]]>
+                <foreach collection="country_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="language != null"><![CDATA[ and language = #{language} ]]></if>
+            <if test="language_enum != null">
+                <![CDATA[ and language in ]]>
+                <foreach collection="language_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="updateTime != null"><![CDATA[ and update_time = #{updateTime} ]]></if>
+            <if test="updateTime_r_min != null"><![CDATA[ and update_time >= #{updateTime_r_min} and update_time <= #{updateTime_r_max} ]]></if>
+            <if test="updateTime_enum != null">
+                <![CDATA[ and update_time in ]]>
+                <foreach collection="updateTime_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="createTime != null"><![CDATA[ and create_time = #{createTime} ]]></if>
+            <if test="createTime_r_min != null"><![CDATA[ and create_time >= #{createTime_r_min} and create_time <= #{createTime_r_max} ]]></if>
+            <if test="createTime_enum != null">
+                <![CDATA[ and create_time in ]]>
+                <foreach collection="createTime_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="remark != null"><![CDATA[ and remark = #{remark} ]]></if>
+            <if test="remark_enum != null">
+                <![CDATA[ and remark in ]]>
+                <foreach collection="remark_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="_default_mulattr != null">
+                <![CDATA[ and ]]>
+                <foreach collection="_default_mulattr" item="item" open="(" separator=" or " close=")">
+                    <if test="item.name == 'id'"><![CDATA[ id = #{item.value} ]]></if>
+                    <if test="item.name == 'openid'"><![CDATA[ openid = #{item.value} ]]></if>
+                    <if test="item.name == 'unionid'"><![CDATA[ unionid = #{item.value} ]]></if>
+                    <if test="item.name == 'nickName'"><![CDATA[ nick_name = #{item.value} ]]></if>
+                    <if test="item.name == 'phone'"><![CDATA[ phone = #{item.value} ]]></if>
+                    <if test="item.name == 'avatarUrl'"><![CDATA[ avatar_url = #{item.value} ]]></if>
+                    <if test="item.name == 'gender'"><![CDATA[ gender = #{item.value} ]]></if>
+                    <if test="item.name == 'city'"><![CDATA[ city = #{item.value} ]]></if>
+                    <if test="item.name == 'province'"><![CDATA[ province = #{item.value} ]]></if>
+                    <if test="item.name == 'country'"><![CDATA[ country = #{item.value} ]]></if>
+                    <if test="item.name == 'language'"><![CDATA[ language = #{item.value} ]]></if>
+                    <if test="item.name == 'remark'"><![CDATA[ remark = #{item.value} ]]></if>
+                </foreach>
+            </if>
+        </trim>
+    </sql>
+
+    <sql id="orderSql">
+        <trim prefix="ORDER BY" suffixOverrides=",">
+            <if test="_orderBy == 'id_desc'"><![CDATA[ id desc, ]]></if>
+            <if test="_orderBy == 'id_asc'"><![CDATA[ id, ]]></if>
+            <if test="_orderBy == 'openid_desc'"><![CDATA[ openid desc, ]]></if>
+            <if test="_orderBy == 'openid_asc'"><![CDATA[ openid, ]]></if>
+            <if test="_orderBy == 'unionid_desc'"><![CDATA[ unionid desc, ]]></if>
+            <if test="_orderBy == 'unionid_asc'"><![CDATA[ unionid, ]]></if>
+            <if test="_orderBy == 'nickName_desc'"><![CDATA[ nick_name desc, ]]></if>
+            <if test="_orderBy == 'nickName_asc'"><![CDATA[ nick_name, ]]></if>
+            <if test="_orderBy == 'phone_desc'"><![CDATA[ phone desc, ]]></if>
+            <if test="_orderBy == 'phone_asc'"><![CDATA[ phone, ]]></if>
+            <if test="_orderBy == 'avatarUrl_desc'"><![CDATA[ avatar_url desc, ]]></if>
+            <if test="_orderBy == 'avatarUrl_asc'"><![CDATA[ avatar_url, ]]></if>
+            <if test="_orderBy == 'gender_desc'"><![CDATA[ gender desc, ]]></if>
+            <if test="_orderBy == 'gender_asc'"><![CDATA[ gender, ]]></if>
+            <if test="_orderBy == 'city_desc'"><![CDATA[ city desc, ]]></if>
+            <if test="_orderBy == 'city_asc'"><![CDATA[ city, ]]></if>
+            <if test="_orderBy == 'province_desc'"><![CDATA[ province desc, ]]></if>
+            <if test="_orderBy == 'province_asc'"><![CDATA[ province, ]]></if>
+            <if test="_orderBy == 'country_desc'"><![CDATA[ country desc, ]]></if>
+            <if test="_orderBy == 'country_asc'"><![CDATA[ country, ]]></if>
+            <if test="_orderBy == 'language_desc'"><![CDATA[ language desc, ]]></if>
+            <if test="_orderBy == 'language_asc'"><![CDATA[ language, ]]></if>
+            <if test="_orderBy == 'updateTime_desc'"><![CDATA[ update_time desc, ]]></if>
+            <if test="_orderBy == 'updateTime_asc'"><![CDATA[ update_time, ]]></if>
+            <if test="_orderBy == 'createTime_desc'"><![CDATA[ create_time desc, ]]></if>
+            <if test="_orderBy == 'createTime_asc'"><![CDATA[ create_time, ]]></if>
+            <if test="_orderBy == 'remark_desc'"><![CDATA[ remark desc, ]]></if>
+            <if test="_orderBy == 'remark_asc'"><![CDATA[ remark, ]]></if>
+
+			<if test="_orderBy_enum != null">
+				<foreach collection="_orderBy_enum" item="orderItem" open="" separator="," close="">
+					<if test="orderItem == 'id_desc'"><![CDATA[ id desc ]]></if>
+					<if test="orderItem == 'id_asc'"><![CDATA[ id ]]></if>
+					<if test="orderItem == 'openid_desc'"><![CDATA[ openid desc ]]></if>
+					<if test="orderItem == 'openid_asc'"><![CDATA[ openid ]]></if>
+					<if test="orderItem == 'unionid_desc'"><![CDATA[ unionid desc ]]></if>
+					<if test="orderItem == 'unionid_asc'"><![CDATA[ unionid ]]></if>
+					<if test="orderItem == 'nickName_desc'"><![CDATA[ nick_name desc ]]></if>
+					<if test="orderItem == 'nickName_asc'"><![CDATA[ nick_name ]]></if>
+					<if test="orderItem == 'phone_desc'"><![CDATA[ phone desc ]]></if>
+					<if test="orderItem == 'phone_asc'"><![CDATA[ phone ]]></if>
+					<if test="orderItem == 'avatarUrl_desc'"><![CDATA[ avatar_url desc ]]></if>
+					<if test="orderItem == 'avatarUrl_asc'"><![CDATA[ avatar_url ]]></if>
+					<if test="orderItem == 'gender_desc'"><![CDATA[ gender desc ]]></if>
+					<if test="orderItem == 'gender_asc'"><![CDATA[ gender ]]></if>
+					<if test="orderItem == 'city_desc'"><![CDATA[ city desc ]]></if>
+					<if test="orderItem == 'city_asc'"><![CDATA[ city ]]></if>
+					<if test="orderItem == 'province_desc'"><![CDATA[ province desc ]]></if>
+					<if test="orderItem == 'province_asc'"><![CDATA[ province ]]></if>
+					<if test="orderItem == 'country_desc'"><![CDATA[ country desc ]]></if>
+					<if test="orderItem == 'country_asc'"><![CDATA[ country ]]></if>
+					<if test="orderItem == 'language_desc'"><![CDATA[ language desc ]]></if>
+					<if test="orderItem == 'language_asc'"><![CDATA[ language ]]></if>
+					<if test="orderItem == 'updateTime_desc'"><![CDATA[ update_time desc ]]></if>
+					<if test="orderItem == 'updateTime_asc'"><![CDATA[ update_time ]]></if>
+					<if test="orderItem == 'createTime_desc'"><![CDATA[ create_time desc ]]></if>
+					<if test="orderItem == 'createTime_asc'"><![CDATA[ create_time ]]></if>
+					<if test="orderItem == 'remark_desc'"><![CDATA[ remark desc ]]></if>
+					<if test="orderItem == 'remark_asc'"><![CDATA[ remark ]]></if>
+					
+				</foreach>
+			</if>
+        </trim>
+    </sql>
+	
+	<sql id="updateSetSql">
+        <trim prefix="set" prefixOverrides="and">
+            <if test="openid != null"><![CDATA[ and openid = #{openid} ]]></if>
+            <if test="unionid != null"><![CDATA[ and unionid = #{unionid} ]]></if>
+            <if test="nickName != null"><![CDATA[ and nick_name = #{nickName} ]]></if>
+            <if test="phone != null"><![CDATA[ and phone = #{phone} ]]></if>
+            <if test="avatarUrl != null"><![CDATA[ and avatar_url = #{avatarUrl} ]]></if>
+            <if test="gender != null"><![CDATA[ and gender = #{gender} ]]></if>
+            <if test="city != null"><![CDATA[ and city = #{city} ]]></if>
+            <if test="province != null"><![CDATA[ and province = #{province} ]]></if>
+            <if test="country != null"><![CDATA[ and country = #{country} ]]></if>
+            <if test="language != null"><![CDATA[ and language = #{language} ]]></if>
+            <if test="updateTime != null"><![CDATA[ and update_time = #{updateTime} ]]></if>
+            <if test="createTime != null"><![CDATA[ and create_time = #{createTime} ]]></if>
+            <if test="remark != null"><![CDATA[ and remark = #{remark} ]]></if>
+        </trim>
+    </sql>	
+
+    <insert id="insertObject" parameterType="cn.com.czcb.model.User">
+        insert into
+        user(id,openid,unionid,nick_name,phone,avatar_url,gender,city,province,country,language,update_time,create_time,remark)
+        values(#{id},#{openid},#{unionid},#{nickName},#{phone},#{avatarUrl},#{gender},#{city},#{province},#{country},#{language},#{updateTime},#{createTime},#{remark});
+    </insert>
+
+    <update id="updateObject" parameterType="cn.com.czcb.model.User">
+        update user
+        set openid=#{openid},unionid=#{unionid},nick_name=#{nickName},phone=#{phone},avatar_url=#{avatarUrl},gender=#{gender},city=#{city},province=#{province},country=#{country},language=#{language},update_time=#{updateTime},create_time=#{createTime},remark=#{remark}
+        where id=#{id};
+    </update>
+	
+	<update id="updateObjectByFields" parameterType="java.util.Map">
+        update user
+        <include refid="updateSetSql" />
+        where id=#{id};
+    </update>
+
+    <delete id="deleteObject" parameterType="string">
+        delete from user where id=#{id};
+    </delete>
+
+    <delete id="deleteObjectByWhere" parameterType="cn.com.czcb.dao.QueryParams">
+        delete from user
+        <include refid="whereSql" />
+    </delete>
+
+    <select id="getBaseObject" parameterType="string" resultMap="resultMap">
+        select 
+        <include refid="baseCol" />
+        from user where id=#{id};
+    </select>
+
+    <select id="getDetailObject" parameterType="string" resultMap="resultMap">
+        select * from user where id=#{id};
+    </select>
+
+    <select id="queryCount" parameterType="cn.com.czcb.dao.QueryParams" resultType="int">
+        select count(*) from user
+          <include refid="whereSql" />
+    </select>
+
+    <select id="queryBaseList" parameterType="cn.com.czcb.dao.QueryParams" resultMap="resultMap">
+        select 
+        <include refid="baseCol" />
+        from user
+            <include refid="whereSql" />
+          <include refid="orderSql" />
+        <include refid="pageSql" />
+    </select>
+
+    <select id="queryDetailList" parameterType="cn.com.czcb.dao.QueryParams" resultMap="resultMap">
+        select * from user
+            <include refid="whereSql" />
+          <include refid="orderSql" />
+        <include refid="pageSql" />
+    </select>
+</mapper> 
+
+

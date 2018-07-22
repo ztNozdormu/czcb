@@ -1,0 +1,495 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 2018/1/25 15:06:08 AJiong created. -->
+
+<mapper namespace="cn.com.czcb.dao.IWechatPayRecordDao">
+
+    <resultMap type="cn.com.czcb.model.WechatPayRecord" id="resultMap">
+        <id property="id" column="id" />
+        <result property="appid" column="appid" />
+        <result property="mch_id" column="mch_id" />
+        <result property="device_info" column="device_info" />
+        <result property="nonce_str" column="nonce_str" />
+        <result property="sign" column="sign" />
+        <result property="sign_type" column="sign_type" />
+        <result property="result_code" column="result_code" />
+        <result property="err_code" column="err_code" />
+        <result property="err_code_des" column="err_code_des" />
+        <result property="openid" column="openid" />
+        <result property="is_subscribe" column="is_subscribe" />
+        <result property="trade_type" column="trade_type" />
+        <result property="bank_type" column="bank_type" />
+        <result property="total_fee" column="total_fee" />
+        <result property="settlement_total_fee" column="settlement_total_fee" />
+        <result property="fee_type" column="fee_type" />
+        <result property="cash_fee" column="cash_fee" />
+        <result property="cash_fee_type" column="cash_fee_type" />
+        <result property="coupon_fee" column="coupon_fee" />
+        <result property="coupon_count" column="coupon_count" />
+        <result property="coupon_type_$n" column="coupon_type_$n" />
+        <result property="coupon_id_$n" column="coupon_id_$n" />
+        <result property="coupon_fee_$n" column="coupon_fee_$n" />
+        <result property="transaction_id" column="transaction_id" />
+        <result property="out_trade_no" column="out_trade_no" />
+        <result property="attach" column="attach" />
+        <result property="time_end" column="time_end" />
+    </resultMap>
+
+    <sql id="baseCol">
+        id, appid, mch_id, device_info, nonce_str, sign, sign_type, result_code, err_code, err_code_des, openid, is_subscribe, trade_type, bank_type, total_fee, settlement_total_fee, fee_type, cash_fee, cash_fee_type, coupon_fee, coupon_count, coupon_type_$n, coupon_id_$n, coupon_fee_$n, transaction_id, out_trade_no, attach, time_end
+    </sql>
+	
+	<sql id="pageSql">
+    	<if test="__start !=null and __size!=null"><![CDATA[ limit #{__start},#{__size} ]]></if>
+    </sql>
+	
+    <sql id="whereSql">
+        <trim prefix="WHERE" prefixOverrides="and |or ">
+            <if test="id != null"><![CDATA[ and id = #{id} ]]></if>
+            <if test="id_enum != null">
+                <![CDATA[ and id in ]]>
+                <foreach collection="id_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="appid != null"><![CDATA[ and appid = #{appid} ]]></if>
+            <if test="appid_enum != null">
+                <![CDATA[ and appid in ]]>
+                <foreach collection="appid_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="mch_id != null"><![CDATA[ and mch_id = #{mch_id} ]]></if>
+            <if test="mch_id_enum != null">
+                <![CDATA[ and mch_id in ]]>
+                <foreach collection="mch_id_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="device_info != null"><![CDATA[ and device_info = #{device_info} ]]></if>
+            <if test="device_info_enum != null">
+                <![CDATA[ and device_info in ]]>
+                <foreach collection="device_info_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="nonce_str != null"><![CDATA[ and nonce_str = #{nonce_str} ]]></if>
+            <if test="nonce_str_enum != null">
+                <![CDATA[ and nonce_str in ]]>
+                <foreach collection="nonce_str_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="sign != null"><![CDATA[ and sign = #{sign} ]]></if>
+            <if test="sign_enum != null">
+                <![CDATA[ and sign in ]]>
+                <foreach collection="sign_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="sign_type != null"><![CDATA[ and sign_type = #{sign_type} ]]></if>
+            <if test="sign_type_enum != null">
+                <![CDATA[ and sign_type in ]]>
+                <foreach collection="sign_type_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="result_code != null"><![CDATA[ and result_code = #{result_code} ]]></if>
+            <if test="result_code_enum != null">
+                <![CDATA[ and result_code in ]]>
+                <foreach collection="result_code_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="err_code != null"><![CDATA[ and err_code = #{err_code} ]]></if>
+            <if test="err_code_enum != null">
+                <![CDATA[ and err_code in ]]>
+                <foreach collection="err_code_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="err_code_des != null"><![CDATA[ and err_code_des = #{err_code_des} ]]></if>
+            <if test="err_code_des_enum != null">
+                <![CDATA[ and err_code_des in ]]>
+                <foreach collection="err_code_des_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="openid != null"><![CDATA[ and openid = #{openid} ]]></if>
+            <if test="openid_enum != null">
+                <![CDATA[ and openid in ]]>
+                <foreach collection="openid_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="is_subscribe != null"><![CDATA[ and is_subscribe = #{is_subscribe} ]]></if>
+            <if test="is_subscribe_enum != null">
+                <![CDATA[ and is_subscribe in ]]>
+                <foreach collection="is_subscribe_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="trade_type != null"><![CDATA[ and trade_type = #{trade_type} ]]></if>
+            <if test="trade_type_enum != null">
+                <![CDATA[ and trade_type in ]]>
+                <foreach collection="trade_type_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="bank_type != null"><![CDATA[ and bank_type = #{bank_type} ]]></if>
+            <if test="bank_type_enum != null">
+                <![CDATA[ and bank_type in ]]>
+                <foreach collection="bank_type_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="total_fee != null"><![CDATA[ and total_fee = #{total_fee} ]]></if>
+            <if test="total_fee_r_min != null"><![CDATA[ and total_fee >= #{total_fee_r_min} and total_fee <= #{total_fee_r_max} ]]></if>
+            <if test="total_fee_enum != null">
+                <![CDATA[ and total_fee in ]]>
+                <foreach collection="total_fee_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="settlement_total_fee != null"><![CDATA[ and settlement_total_fee = #{settlement_total_fee} ]]></if>
+            <if test="settlement_total_fee_r_min != null"><![CDATA[ and settlement_total_fee >= #{settlement_total_fee_r_min} and settlement_total_fee <= #{settlement_total_fee_r_max} ]]></if>
+            <if test="settlement_total_fee_enum != null">
+                <![CDATA[ and settlement_total_fee in ]]>
+                <foreach collection="settlement_total_fee_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="fee_type != null"><![CDATA[ and fee_type = #{fee_type} ]]></if>
+            <if test="fee_type_enum != null">
+                <![CDATA[ and fee_type in ]]>
+                <foreach collection="fee_type_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="cash_fee != null"><![CDATA[ and cash_fee = #{cash_fee} ]]></if>
+            <if test="cash_fee_r_min != null"><![CDATA[ and cash_fee >= #{cash_fee_r_min} and cash_fee <= #{cash_fee_r_max} ]]></if>
+            <if test="cash_fee_enum != null">
+                <![CDATA[ and cash_fee in ]]>
+                <foreach collection="cash_fee_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="cash_fee_type != null"><![CDATA[ and cash_fee_type = #{cash_fee_type} ]]></if>
+            <if test="cash_fee_type_enum != null">
+                <![CDATA[ and cash_fee_type in ]]>
+                <foreach collection="cash_fee_type_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="coupon_fee != null"><![CDATA[ and coupon_fee = #{coupon_fee} ]]></if>
+            <if test="coupon_fee_r_min != null"><![CDATA[ and coupon_fee >= #{coupon_fee_r_min} and coupon_fee <= #{coupon_fee_r_max} ]]></if>
+            <if test="coupon_fee_enum != null">
+                <![CDATA[ and coupon_fee in ]]>
+                <foreach collection="coupon_fee_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="coupon_count != null"><![CDATA[ and coupon_count = #{coupon_count} ]]></if>
+            <if test="coupon_count_r_min != null"><![CDATA[ and coupon_count >= #{coupon_count_r_min} and coupon_count <= #{coupon_count_r_max} ]]></if>
+            <if test="coupon_count_enum != null">
+                <![CDATA[ and coupon_count in ]]>
+                <foreach collection="coupon_count_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="coupon_type_$n != null"><![CDATA[ and coupon_type_$n = #{coupon_type_$n} ]]></if>
+            <if test="coupon_type_$n_enum != null">
+                <![CDATA[ and coupon_type_$n in ]]>
+                <foreach collection="coupon_type_$n_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="coupon_id_$n != null"><![CDATA[ and coupon_id_$n = #{coupon_id_$n} ]]></if>
+            <if test="coupon_id_$n_enum != null">
+                <![CDATA[ and coupon_id_$n in ]]>
+                <foreach collection="coupon_id_$n_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="coupon_fee_$n != null"><![CDATA[ and coupon_fee_$n = #{coupon_fee_$n} ]]></if>
+            <if test="coupon_fee_$n_r_min != null"><![CDATA[ and coupon_fee_$n >= #{coupon_fee_$n_r_min} and coupon_fee_$n <= #{coupon_fee_$n_r_max} ]]></if>
+            <if test="coupon_fee_$n_enum != null">
+                <![CDATA[ and coupon_fee_$n in ]]>
+                <foreach collection="coupon_fee_$n_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="transaction_id != null"><![CDATA[ and transaction_id = #{transaction_id} ]]></if>
+            <if test="transaction_id_enum != null">
+                <![CDATA[ and transaction_id in ]]>
+                <foreach collection="transaction_id_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="out_trade_no != null"><![CDATA[ and out_trade_no = #{out_trade_no} ]]></if>
+            <if test="out_trade_no_enum != null">
+                <![CDATA[ and out_trade_no in ]]>
+                <foreach collection="out_trade_no_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="attach != null"><![CDATA[ and attach = #{attach} ]]></if>
+            <if test="attach_enum != null">
+                <![CDATA[ and attach in ]]>
+                <foreach collection="attach_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="time_end != null"><![CDATA[ and time_end = #{time_end} ]]></if>
+            <if test="time_end_enum != null">
+                <![CDATA[ and time_end in ]]>
+                <foreach collection="time_end_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="_default_mulattr != null">
+                <![CDATA[ and ]]>
+                <foreach collection="_default_mulattr" item="item" open="(" separator=" or " close=")">
+                    <if test="item.name == 'id'"><![CDATA[ id = #{item.value} ]]></if>
+                    <if test="item.name == 'appid'"><![CDATA[ appid = #{item.value} ]]></if>
+                    <if test="item.name == 'mch_id'"><![CDATA[ mch_id = #{item.value} ]]></if>
+                    <if test="item.name == 'device_info'"><![CDATA[ device_info = #{item.value} ]]></if>
+                    <if test="item.name == 'nonce_str'"><![CDATA[ nonce_str = #{item.value} ]]></if>
+                    <if test="item.name == 'sign'"><![CDATA[ sign = #{item.value} ]]></if>
+                    <if test="item.name == 'sign_type'"><![CDATA[ sign_type = #{item.value} ]]></if>
+                    <if test="item.name == 'result_code'"><![CDATA[ result_code = #{item.value} ]]></if>
+                    <if test="item.name == 'err_code'"><![CDATA[ err_code = #{item.value} ]]></if>
+                    <if test="item.name == 'err_code_des'"><![CDATA[ err_code_des = #{item.value} ]]></if>
+                    <if test="item.name == 'openid'"><![CDATA[ openid = #{item.value} ]]></if>
+                    <if test="item.name == 'is_subscribe'"><![CDATA[ is_subscribe = #{item.value} ]]></if>
+                    <if test="item.name == 'trade_type'"><![CDATA[ trade_type = #{item.value} ]]></if>
+                    <if test="item.name == 'bank_type'"><![CDATA[ bank_type = #{item.value} ]]></if>
+                    <if test="item.name == 'fee_type'"><![CDATA[ fee_type = #{item.value} ]]></if>
+                    <if test="item.name == 'cash_fee_type'"><![CDATA[ cash_fee_type = #{item.value} ]]></if>
+                    <if test="item.name == 'coupon_type_$n'"><![CDATA[ coupon_type_$n = #{item.value} ]]></if>
+                    <if test="item.name == 'coupon_id_$n'"><![CDATA[ coupon_id_$n = #{item.value} ]]></if>
+                    <if test="item.name == 'transaction_id'"><![CDATA[ transaction_id = #{item.value} ]]></if>
+                    <if test="item.name == 'out_trade_no'"><![CDATA[ out_trade_no = #{item.value} ]]></if>
+                    <if test="item.name == 'attach'"><![CDATA[ attach = #{item.value} ]]></if>
+                    <if test="item.name == 'time_end'"><![CDATA[ time_end = #{item.value} ]]></if>
+                </foreach>
+            </if>
+        </trim>
+    </sql>
+
+    <sql id="orderSql">
+        <trim prefix="ORDER BY" suffixOverrides=",">
+            <if test="_orderBy == 'id_desc'"><![CDATA[ id desc, ]]></if>
+            <if test="_orderBy == 'id_asc'"><![CDATA[ id, ]]></if>
+            <if test="_orderBy == 'appid_desc'"><![CDATA[ appid desc, ]]></if>
+            <if test="_orderBy == 'appid_asc'"><![CDATA[ appid, ]]></if>
+            <if test="_orderBy == 'mch_id_desc'"><![CDATA[ mch_id desc, ]]></if>
+            <if test="_orderBy == 'mch_id_asc'"><![CDATA[ mch_id, ]]></if>
+            <if test="_orderBy == 'device_info_desc'"><![CDATA[ device_info desc, ]]></if>
+            <if test="_orderBy == 'device_info_asc'"><![CDATA[ device_info, ]]></if>
+            <if test="_orderBy == 'nonce_str_desc'"><![CDATA[ nonce_str desc, ]]></if>
+            <if test="_orderBy == 'nonce_str_asc'"><![CDATA[ nonce_str, ]]></if>
+            <if test="_orderBy == 'sign_desc'"><![CDATA[ sign desc, ]]></if>
+            <if test="_orderBy == 'sign_asc'"><![CDATA[ sign, ]]></if>
+            <if test="_orderBy == 'sign_type_desc'"><![CDATA[ sign_type desc, ]]></if>
+            <if test="_orderBy == 'sign_type_asc'"><![CDATA[ sign_type, ]]></if>
+            <if test="_orderBy == 'result_code_desc'"><![CDATA[ result_code desc, ]]></if>
+            <if test="_orderBy == 'result_code_asc'"><![CDATA[ result_code, ]]></if>
+            <if test="_orderBy == 'err_code_desc'"><![CDATA[ err_code desc, ]]></if>
+            <if test="_orderBy == 'err_code_asc'"><![CDATA[ err_code, ]]></if>
+            <if test="_orderBy == 'err_code_des_desc'"><![CDATA[ err_code_des desc, ]]></if>
+            <if test="_orderBy == 'err_code_des_asc'"><![CDATA[ err_code_des, ]]></if>
+            <if test="_orderBy == 'openid_desc'"><![CDATA[ openid desc, ]]></if>
+            <if test="_orderBy == 'openid_asc'"><![CDATA[ openid, ]]></if>
+            <if test="_orderBy == 'is_subscribe_desc'"><![CDATA[ is_subscribe desc, ]]></if>
+            <if test="_orderBy == 'is_subscribe_asc'"><![CDATA[ is_subscribe, ]]></if>
+            <if test="_orderBy == 'trade_type_desc'"><![CDATA[ trade_type desc, ]]></if>
+            <if test="_orderBy == 'trade_type_asc'"><![CDATA[ trade_type, ]]></if>
+            <if test="_orderBy == 'bank_type_desc'"><![CDATA[ bank_type desc, ]]></if>
+            <if test="_orderBy == 'bank_type_asc'"><![CDATA[ bank_type, ]]></if>
+            <if test="_orderBy == 'total_fee_desc'"><![CDATA[ total_fee desc, ]]></if>
+            <if test="_orderBy == 'total_fee_asc'"><![CDATA[ total_fee, ]]></if>
+            <if test="_orderBy == 'settlement_total_fee_desc'"><![CDATA[ settlement_total_fee desc, ]]></if>
+            <if test="_orderBy == 'settlement_total_fee_asc'"><![CDATA[ settlement_total_fee, ]]></if>
+            <if test="_orderBy == 'fee_type_desc'"><![CDATA[ fee_type desc, ]]></if>
+            <if test="_orderBy == 'fee_type_asc'"><![CDATA[ fee_type, ]]></if>
+            <if test="_orderBy == 'cash_fee_desc'"><![CDATA[ cash_fee desc, ]]></if>
+            <if test="_orderBy == 'cash_fee_asc'"><![CDATA[ cash_fee, ]]></if>
+            <if test="_orderBy == 'cash_fee_type_desc'"><![CDATA[ cash_fee_type desc, ]]></if>
+            <if test="_orderBy == 'cash_fee_type_asc'"><![CDATA[ cash_fee_type, ]]></if>
+            <if test="_orderBy == 'coupon_fee_desc'"><![CDATA[ coupon_fee desc, ]]></if>
+            <if test="_orderBy == 'coupon_fee_asc'"><![CDATA[ coupon_fee, ]]></if>
+            <if test="_orderBy == 'coupon_count_desc'"><![CDATA[ coupon_count desc, ]]></if>
+            <if test="_orderBy == 'coupon_count_asc'"><![CDATA[ coupon_count, ]]></if>
+            <if test="_orderBy == 'coupon_type_$n_desc'"><![CDATA[ coupon_type_$n desc, ]]></if>
+            <if test="_orderBy == 'coupon_type_$n_asc'"><![CDATA[ coupon_type_$n, ]]></if>
+            <if test="_orderBy == 'coupon_id_$n_desc'"><![CDATA[ coupon_id_$n desc, ]]></if>
+            <if test="_orderBy == 'coupon_id_$n_asc'"><![CDATA[ coupon_id_$n, ]]></if>
+            <if test="_orderBy == 'coupon_fee_$n_desc'"><![CDATA[ coupon_fee_$n desc, ]]></if>
+            <if test="_orderBy == 'coupon_fee_$n_asc'"><![CDATA[ coupon_fee_$n, ]]></if>
+            <if test="_orderBy == 'transaction_id_desc'"><![CDATA[ transaction_id desc, ]]></if>
+            <if test="_orderBy == 'transaction_id_asc'"><![CDATA[ transaction_id, ]]></if>
+            <if test="_orderBy == 'out_trade_no_desc'"><![CDATA[ out_trade_no desc, ]]></if>
+            <if test="_orderBy == 'out_trade_no_asc'"><![CDATA[ out_trade_no, ]]></if>
+            <if test="_orderBy == 'attach_desc'"><![CDATA[ attach desc, ]]></if>
+            <if test="_orderBy == 'attach_asc'"><![CDATA[ attach, ]]></if>
+            <if test="_orderBy == 'time_end_desc'"><![CDATA[ time_end desc, ]]></if>
+            <if test="_orderBy == 'time_end_asc'"><![CDATA[ time_end, ]]></if>
+
+			<if test="_orderBy_enum != null">
+				<foreach collection="_orderBy_enum" item="orderItem" open="" separator="," close="">
+					<if test="orderItem == 'id_desc'"><![CDATA[ id desc ]]></if>
+					<if test="orderItem == 'id_asc'"><![CDATA[ id ]]></if>
+					<if test="orderItem == 'appid_desc'"><![CDATA[ appid desc ]]></if>
+					<if test="orderItem == 'appid_asc'"><![CDATA[ appid ]]></if>
+					<if test="orderItem == 'mch_id_desc'"><![CDATA[ mch_id desc ]]></if>
+					<if test="orderItem == 'mch_id_asc'"><![CDATA[ mch_id ]]></if>
+					<if test="orderItem == 'device_info_desc'"><![CDATA[ device_info desc ]]></if>
+					<if test="orderItem == 'device_info_asc'"><![CDATA[ device_info ]]></if>
+					<if test="orderItem == 'nonce_str_desc'"><![CDATA[ nonce_str desc ]]></if>
+					<if test="orderItem == 'nonce_str_asc'"><![CDATA[ nonce_str ]]></if>
+					<if test="orderItem == 'sign_desc'"><![CDATA[ sign desc ]]></if>
+					<if test="orderItem == 'sign_asc'"><![CDATA[ sign ]]></if>
+					<if test="orderItem == 'sign_type_desc'"><![CDATA[ sign_type desc ]]></if>
+					<if test="orderItem == 'sign_type_asc'"><![CDATA[ sign_type ]]></if>
+					<if test="orderItem == 'result_code_desc'"><![CDATA[ result_code desc ]]></if>
+					<if test="orderItem == 'result_code_asc'"><![CDATA[ result_code ]]></if>
+					<if test="orderItem == 'err_code_desc'"><![CDATA[ err_code desc ]]></if>
+					<if test="orderItem == 'err_code_asc'"><![CDATA[ err_code ]]></if>
+					<if test="orderItem == 'err_code_des_desc'"><![CDATA[ err_code_des desc ]]></if>
+					<if test="orderItem == 'err_code_des_asc'"><![CDATA[ err_code_des ]]></if>
+					<if test="orderItem == 'openid_desc'"><![CDATA[ openid desc ]]></if>
+					<if test="orderItem == 'openid_asc'"><![CDATA[ openid ]]></if>
+					<if test="orderItem == 'is_subscribe_desc'"><![CDATA[ is_subscribe desc ]]></if>
+					<if test="orderItem == 'is_subscribe_asc'"><![CDATA[ is_subscribe ]]></if>
+					<if test="orderItem == 'trade_type_desc'"><![CDATA[ trade_type desc ]]></if>
+					<if test="orderItem == 'trade_type_asc'"><![CDATA[ trade_type ]]></if>
+					<if test="orderItem == 'bank_type_desc'"><![CDATA[ bank_type desc ]]></if>
+					<if test="orderItem == 'bank_type_asc'"><![CDATA[ bank_type ]]></if>
+					<if test="orderItem == 'total_fee_desc'"><![CDATA[ total_fee desc ]]></if>
+					<if test="orderItem == 'total_fee_asc'"><![CDATA[ total_fee ]]></if>
+					<if test="orderItem == 'settlement_total_fee_desc'"><![CDATA[ settlement_total_fee desc ]]></if>
+					<if test="orderItem == 'settlement_total_fee_asc'"><![CDATA[ settlement_total_fee ]]></if>
+					<if test="orderItem == 'fee_type_desc'"><![CDATA[ fee_type desc ]]></if>
+					<if test="orderItem == 'fee_type_asc'"><![CDATA[ fee_type ]]></if>
+					<if test="orderItem == 'cash_fee_desc'"><![CDATA[ cash_fee desc ]]></if>
+					<if test="orderItem == 'cash_fee_asc'"><![CDATA[ cash_fee ]]></if>
+					<if test="orderItem == 'cash_fee_type_desc'"><![CDATA[ cash_fee_type desc ]]></if>
+					<if test="orderItem == 'cash_fee_type_asc'"><![CDATA[ cash_fee_type ]]></if>
+					<if test="orderItem == 'coupon_fee_desc'"><![CDATA[ coupon_fee desc ]]></if>
+					<if test="orderItem == 'coupon_fee_asc'"><![CDATA[ coupon_fee ]]></if>
+					<if test="orderItem == 'coupon_count_desc'"><![CDATA[ coupon_count desc ]]></if>
+					<if test="orderItem == 'coupon_count_asc'"><![CDATA[ coupon_count ]]></if>
+					<if test="orderItem == 'coupon_type_$n_desc'"><![CDATA[ coupon_type_$n desc ]]></if>
+					<if test="orderItem == 'coupon_type_$n_asc'"><![CDATA[ coupon_type_$n ]]></if>
+					<if test="orderItem == 'coupon_id_$n_desc'"><![CDATA[ coupon_id_$n desc ]]></if>
+					<if test="orderItem == 'coupon_id_$n_asc'"><![CDATA[ coupon_id_$n ]]></if>
+					<if test="orderItem == 'coupon_fee_$n_desc'"><![CDATA[ coupon_fee_$n desc ]]></if>
+					<if test="orderItem == 'coupon_fee_$n_asc'"><![CDATA[ coupon_fee_$n ]]></if>
+					<if test="orderItem == 'transaction_id_desc'"><![CDATA[ transaction_id desc ]]></if>
+					<if test="orderItem == 'transaction_id_asc'"><![CDATA[ transaction_id ]]></if>
+					<if test="orderItem == 'out_trade_no_desc'"><![CDATA[ out_trade_no desc ]]></if>
+					<if test="orderItem == 'out_trade_no_asc'"><![CDATA[ out_trade_no ]]></if>
+					<if test="orderItem == 'attach_desc'"><![CDATA[ attach desc ]]></if>
+					<if test="orderItem == 'attach_asc'"><![CDATA[ attach ]]></if>
+					<if test="orderItem == 'time_end_desc'"><![CDATA[ time_end desc ]]></if>
+					<if test="orderItem == 'time_end_asc'"><![CDATA[ time_end ]]></if>
+					
+				</foreach>
+			</if>
+        </trim>
+    </sql>
+	
+	<sql id="updateSetSql">
+        <trim prefix="set" prefixOverrides="and">
+            <if test="appid != null"><![CDATA[ and appid = #{appid} ]]></if>
+            <if test="mch_id != null"><![CDATA[ and mch_id = #{mch_id} ]]></if>
+            <if test="device_info != null"><![CDATA[ and device_info = #{device_info} ]]></if>
+            <if test="nonce_str != null"><![CDATA[ and nonce_str = #{nonce_str} ]]></if>
+            <if test="sign != null"><![CDATA[ and sign = #{sign} ]]></if>
+            <if test="sign_type != null"><![CDATA[ and sign_type = #{sign_type} ]]></if>
+            <if test="result_code != null"><![CDATA[ and result_code = #{result_code} ]]></if>
+            <if test="err_code != null"><![CDATA[ and err_code = #{err_code} ]]></if>
+            <if test="err_code_des != null"><![CDATA[ and err_code_des = #{err_code_des} ]]></if>
+            <if test="openid != null"><![CDATA[ and openid = #{openid} ]]></if>
+            <if test="is_subscribe != null"><![CDATA[ and is_subscribe = #{is_subscribe} ]]></if>
+            <if test="trade_type != null"><![CDATA[ and trade_type = #{trade_type} ]]></if>
+            <if test="bank_type != null"><![CDATA[ and bank_type = #{bank_type} ]]></if>
+            <if test="total_fee != null"><![CDATA[ and total_fee = #{total_fee} ]]></if>
+            <if test="settlement_total_fee != null"><![CDATA[ and settlement_total_fee = #{settlement_total_fee} ]]></if>
+            <if test="fee_type != null"><![CDATA[ and fee_type = #{fee_type} ]]></if>
+            <if test="cash_fee != null"><![CDATA[ and cash_fee = #{cash_fee} ]]></if>
+            <if test="cash_fee_type != null"><![CDATA[ and cash_fee_type = #{cash_fee_type} ]]></if>
+            <if test="coupon_fee != null"><![CDATA[ and coupon_fee = #{coupon_fee} ]]></if>
+            <if test="coupon_count != null"><![CDATA[ and coupon_count = #{coupon_count} ]]></if>
+            <if test="coupon_type_$n != null"><![CDATA[ and coupon_type_$n = #{coupon_type_$n} ]]></if>
+            <if test="coupon_id_$n != null"><![CDATA[ and coupon_id_$n = #{coupon_id_$n} ]]></if>
+            <if test="coupon_fee_$n != null"><![CDATA[ and coupon_fee_$n = #{coupon_fee_$n} ]]></if>
+            <if test="transaction_id != null"><![CDATA[ and transaction_id = #{transaction_id} ]]></if>
+            <if test="out_trade_no != null"><![CDATA[ and out_trade_no = #{out_trade_no} ]]></if>
+            <if test="attach != null"><![CDATA[ and attach = #{attach} ]]></if>
+            <if test="time_end != null"><![CDATA[ and time_end = #{time_end} ]]></if>
+        </trim>
+    </sql>	
+
+    <insert id="insertObject" parameterType="cn.com.czcb.model.WechatPayRecord">
+        insert into
+        wechat_pay_record(id,appid,mch_id,device_info,nonce_str,sign,sign_type,result_code,err_code,err_code_des,openid,is_subscribe,trade_type,bank_type,total_fee,settlement_total_fee,fee_type,cash_fee,cash_fee_type,coupon_fee,coupon_count,coupon_type_$n,coupon_id_$n,coupon_fee_$n,transaction_id,out_trade_no,attach,time_end)
+        values(#{id},#{appid},#{mch_id},#{device_info},#{nonce_str},#{sign},#{sign_type},#{result_code},#{err_code},#{err_code_des},#{openid},#{is_subscribe},#{trade_type},#{bank_type},#{total_fee},#{settlement_total_fee},#{fee_type},#{cash_fee},#{cash_fee_type},#{coupon_fee},#{coupon_count},#{coupon_type_$n},#{coupon_id_$n},#{coupon_fee_$n},#{transaction_id},#{out_trade_no},#{attach},#{time_end});
+    </insert>
+
+    <update id="updateObject" parameterType="cn.com.czcb.model.WechatPayRecord">
+        update wechat_pay_record
+        set appid=#{appid},mch_id=#{mch_id},device_info=#{device_info},nonce_str=#{nonce_str},sign=#{sign},sign_type=#{sign_type},result_code=#{result_code},err_code=#{err_code},err_code_des=#{err_code_des},openid=#{openid},is_subscribe=#{is_subscribe},trade_type=#{trade_type},bank_type=#{bank_type},total_fee=#{total_fee},settlement_total_fee=#{settlement_total_fee},fee_type=#{fee_type},cash_fee=#{cash_fee},cash_fee_type=#{cash_fee_type},coupon_fee=#{coupon_fee},coupon_count=#{coupon_count},coupon_type_$n=#{coupon_type_$n},coupon_id_$n=#{coupon_id_$n},coupon_fee_$n=#{coupon_fee_$n},transaction_id=#{transaction_id},out_trade_no=#{out_trade_no},attach=#{attach},time_end=#{time_end}
+        where id=#{id};
+    </update>
+	
+	<update id="updateObjectByFields" parameterType="java.util.Map">
+        update wechat_pay_record
+        <include refid="updateSetSql" />
+        where id=#{id};
+    </update>
+
+    <delete id="deleteObject" parameterType="string">
+        delete from wechat_pay_record where id=#{id};
+    </delete>
+
+    <delete id="deleteObjectByWhere" parameterType="cn.com.czcb.dao.QueryParams">
+        delete from wechat_pay_record
+        <include refid="whereSql" />
+    </delete>
+
+    <select id="getBaseObject" parameterType="string" resultMap="resultMap">
+        select 
+        <include refid="baseCol" />
+        from wechat_pay_record where id=#{id};
+    </select>
+
+    <select id="getDetailObject" parameterType="string" resultMap="resultMap">
+        select * from wechat_pay_record where id=#{id};
+    </select>
+
+    <select id="queryCount" parameterType="cn.com.czcb.dao.QueryParams" resultType="int">
+        select count(*) from wechat_pay_record
+          <include refid="whereSql" />
+    </select>
+
+    <select id="queryBaseList" parameterType="cn.com.czcb.dao.QueryParams" resultMap="resultMap">
+        select 
+        <include refid="baseCol" />
+        from wechat_pay_record
+            <include refid="whereSql" />
+          <include refid="orderSql" />
+        <include refid="pageSql" />
+    </select>
+
+    <select id="queryDetailList" parameterType="cn.com.czcb.dao.QueryParams" resultMap="resultMap">
+        select * from wechat_pay_record
+            <include refid="whereSql" />
+          <include refid="orderSql" />
+        <include refid="pageSql" />
+    </select>
+</mapper> 
+
+

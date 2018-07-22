@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 2018/2/7 11:37:58 AJiong created. -->
+
+<mapper namespace="cn.com.czcb.dao.IVisitOrderLogDao">
+
+    <resultMap type="cn.com.czcb.model.VisitOrderLog" id="resultMap">
+        <id property="id" column="id" />
+        <result property="userId" column="user_id" />
+        <result property="createTime" column="create_time" />
+        <result property="remark" column="remark" />
+    </resultMap>
+
+    <sql id="baseCol">
+        id, user_id, create_time, remark
+    </sql>
+	
+	<sql id="pageSql">
+    	<if test="__start !=null and __size!=null"><![CDATA[ limit #{__start},#{__size} ]]></if>
+    </sql>
+	
+    <sql id="whereSql">
+        <trim prefix="WHERE" prefixOverrides="and |or ">
+            <if test="id != null"><![CDATA[ and id = #{id} ]]></if>
+            <if test="id_enum != null">
+                <![CDATA[ and id in ]]>
+                <foreach collection="id_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="userId != null"><![CDATA[ and user_id = #{userId} ]]></if>
+            <if test="userId_enum != null">
+                <![CDATA[ and user_id in ]]>
+                <foreach collection="userId_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="createTime != null"><![CDATA[ and create_time = #{createTime} ]]></if>
+            <if test="createTime_r_min != null"><![CDATA[ and create_time >= #{createTime_r_min} and create_time <= #{createTime_r_max} ]]></if>
+            <if test="createTime_enum != null">
+                <![CDATA[ and create_time in ]]>
+                <foreach collection="createTime_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="remark != null"><![CDATA[ and remark = #{remark} ]]></if>
+            <if test="remark_enum != null">
+                <![CDATA[ and remark in ]]>
+                <foreach collection="remark_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="_default_mulattr != null">
+                <![CDATA[ and ]]>
+                <foreach collection="_default_mulattr" item="item" open="(" separator=" or " close=")">
+                    <if test="item.name == 'id'"><![CDATA[ id = #{item.value} ]]></if>
+                    <if test="item.name == 'userId'"><![CDATA[ user_id = #{item.value} ]]></if>
+                    <if test="item.name == 'remark'"><![CDATA[ remark = #{item.value} ]]></if>
+                </foreach>
+            </if>
+        </trim>
+    </sql>
+
+    <sql id="orderSql">
+        <trim prefix="ORDER BY" suffixOverrides=",">
+            <if test="_orderBy == 'id_desc'"><![CDATA[ id desc, ]]></if>
+            <if test="_orderBy == 'id_asc'"><![CDATA[ id, ]]></if>
+            <if test="_orderBy == 'userId_desc'"><![CDATA[ user_id desc, ]]></if>
+            <if test="_orderBy == 'userId_asc'"><![CDATA[ user_id, ]]></if>
+            <if test="_orderBy == 'createTime_desc'"><![CDATA[ create_time desc, ]]></if>
+            <if test="_orderBy == 'createTime_asc'"><![CDATA[ create_time, ]]></if>
+            <if test="_orderBy == 'remark_desc'"><![CDATA[ remark desc, ]]></if>
+            <if test="_orderBy == 'remark_asc'"><![CDATA[ remark, ]]></if>
+
+			<if test="_orderBy_enum != null">
+				<foreach collection="_orderBy_enum" item="orderItem" open="" separator="," close="">
+					<if test="orderItem == 'id_desc'"><![CDATA[ id desc ]]></if>
+					<if test="orderItem == 'id_asc'"><![CDATA[ id ]]></if>
+					<if test="orderItem == 'userId_desc'"><![CDATA[ user_id desc ]]></if>
+					<if test="orderItem == 'userId_asc'"><![CDATA[ user_id ]]></if>
+					<if test="orderItem == 'createTime_desc'"><![CDATA[ create_time desc ]]></if>
+					<if test="orderItem == 'createTime_asc'"><![CDATA[ create_time ]]></if>
+					<if test="orderItem == 'remark_desc'"><![CDATA[ remark desc ]]></if>
+					<if test="orderItem == 'remark_asc'"><![CDATA[ remark ]]></if>
+					
+				</foreach>
+			</if>
+        </trim>
+    </sql>
+	
+	<sql id="updateSetSql">
+        <trim prefix="set" prefixOverrides="and">
+            <if test="userId != null"><![CDATA[ and user_id = #{userId} ]]></if>
+            <if test="createTime != null"><![CDATA[ and create_time = #{createTime} ]]></if>
+            <if test="remark != null"><![CDATA[ and remark = #{remark} ]]></if>
+        </trim>
+    </sql>	
+
+    <insert id="insertObject" parameterType="cn.com.czcb.model.VisitOrderLog">
+        insert into
+        visit_order_log(id,user_id,create_time,remark)
+        values(#{id},#{userId},#{createTime},#{remark});
+    </insert>
+
+    <update id="updateObject" parameterType="cn.com.czcb.model.VisitOrderLog">
+        update visit_order_log
+        set user_id=#{userId},create_time=#{createTime},remark=#{remark}
+        where id=#{id};
+    </update>
+	
+	<update id="updateObjectByFields" parameterType="java.util.Map">
+        update visit_order_log
+        <include refid="updateSetSql" />
+        where id=#{id};
+    </update>
+
+    <delete id="deleteObject" parameterType="string">
+        delete from visit_order_log where id=#{id};
+    </delete>
+
+    <delete id="deleteObjectByWhere" parameterType="cn.com.czcb.dao.QueryParams">
+        delete from visit_order_log
+        <include refid="whereSql" />
+    </delete>
+
+    <select id="getBaseObject" parameterType="string" resultMap="resultMap">
+        select 
+        <include refid="baseCol" />
+        from visit_order_log where id=#{id};
+    </select>
+
+    <select id="getDetailObject" parameterType="string" resultMap="resultMap">
+        select * from visit_order_log where id=#{id};
+    </select>
+
+    <select id="queryCount" parameterType="cn.com.czcb.dao.QueryParams" resultType="int">
+        select count(*) from visit_order_log
+          <include refid="whereSql" />
+    </select>
+
+    <select id="queryBaseList" parameterType="cn.com.czcb.dao.QueryParams" resultMap="resultMap">
+        select 
+        <include refid="baseCol" />
+        from visit_order_log
+            <include refid="whereSql" />
+          <include refid="orderSql" />
+        <include refid="pageSql" />
+    </select>
+
+    <select id="queryDetailList" parameterType="cn.com.czcb.dao.QueryParams" resultMap="resultMap">
+        select * from visit_order_log
+            <include refid="whereSql" />
+          <include refid="orderSql" />
+        <include refid="pageSql" />
+    </select>
+</mapper> 
+
+

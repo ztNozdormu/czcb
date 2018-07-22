@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 2018/4/9 10:53:18 Wen Jun created. -->
+
+<mapper namespace="cn.com.czcb.dao.IFeedbackDao">
+
+    <resultMap type="cn.com.czcb.model.Feedback" id="resultMap">
+        <id property="id" column="id" />
+        <result property="phone" column="phone" />
+        <result property="feedbackTypeId" column="feedback_type_id" />
+        <result property="feedbackTypeText" column="feedback_type_text" />
+        <result property="feedbackProblemId" column="feedback_problem_id" />
+        <result property="feedbackProblemText" column="feedback_problem_text" />
+        <result property="text" column="text" />
+        <result property="picture1" column="picture1" />
+        <result property="picture2" column="picture2" />
+        <result property="picture3" column="picture3" />
+        <result property="picture4" column="picture4" />
+        <result property="createTime" column="create_time" />
+    </resultMap>
+
+    <sql id="baseCol">
+        id, phone, feedback_type_id, feedback_type_text, feedback_problem_id, feedback_problem_text, text, picture1, picture2, picture3, picture4, create_time
+    </sql>
+	
+	<sql id="pageSql">
+    	<if test="__start !=null and __size!=null"><![CDATA[ limit #{__start},#{__size} ]]></if>
+    </sql>
+	
+    <sql id="whereSql">
+        <trim prefix="WHERE" prefixOverrides="and |or ">
+            <if test="id != null"><![CDATA[ and id = #{id} ]]></if>
+            <if test="id_enum != null">
+                <![CDATA[ and id in ]]>
+                <foreach collection="id_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="phone != null"><![CDATA[ and phone = #{phone} ]]></if>
+            <if test="phone_enum != null">
+                <![CDATA[ and phone in ]]>
+                <foreach collection="phone_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="feedbackTypeId != null"><![CDATA[ and feedback_type_id = #{feedbackTypeId} ]]></if>
+            <if test="feedbackTypeId_enum != null">
+                <![CDATA[ and feedback_type_id in ]]>
+                <foreach collection="feedbackTypeId_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="feedbackTypeText != null"><![CDATA[ and feedback_type_text = #{feedbackTypeText} ]]></if>
+            <if test="feedbackTypeText_enum != null">
+                <![CDATA[ and feedback_type_text in ]]>
+                <foreach collection="feedbackTypeText_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="feedbackProblemId != null"><![CDATA[ and feedback_problem_id = #{feedbackProblemId} ]]></if>
+            <if test="feedbackProblemId_enum != null">
+                <![CDATA[ and feedback_problem_id in ]]>
+                <foreach collection="feedbackProblemId_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="feedbackProblemText != null"><![CDATA[ and feedback_problem_text = #{feedbackProblemText} ]]></if>
+            <if test="feedbackProblemText_enum != null">
+                <![CDATA[ and feedback_problem_text in ]]>
+                <foreach collection="feedbackProblemText_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="text != null"><![CDATA[ and text = #{text} ]]></if>
+            <if test="text_enum != null">
+                <![CDATA[ and text in ]]>
+                <foreach collection="text_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="picture1 != null"><![CDATA[ and picture1 = #{picture1} ]]></if>
+            <if test="picture1_enum != null">
+                <![CDATA[ and picture1 in ]]>
+                <foreach collection="picture1_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="picture2 != null"><![CDATA[ and picture2 = #{picture2} ]]></if>
+            <if test="picture2_enum != null">
+                <![CDATA[ and picture2 in ]]>
+                <foreach collection="picture2_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="picture3 != null"><![CDATA[ and picture3 = #{picture3} ]]></if>
+            <if test="picture3_enum != null">
+                <![CDATA[ and picture3 in ]]>
+                <foreach collection="picture3_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="picture4 != null"><![CDATA[ and picture4 = #{picture4} ]]></if>
+            <if test="picture4_enum != null">
+                <![CDATA[ and picture4 in ]]>
+                <foreach collection="picture4_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="createTime != null"><![CDATA[ and create_time = #{createTime} ]]></if>
+            <if test="createTime_r_min != null"><![CDATA[ and create_time >= #{createTime_r_min} and create_time <= #{createTime_r_max} ]]></if>
+            <if test="createTime_enum != null">
+                <![CDATA[ and create_time in ]]>
+                <foreach collection="createTime_enum" item="value" open="(" separator="," close=")">
+                    <![CDATA[ #{value} ]]>
+                </foreach>
+            </if>
+            <if test="_default_mulattr != null">
+                <![CDATA[ and ]]>
+                <foreach collection="_default_mulattr" item="item" open="(" separator=" or " close=")">
+                    <if test="item.name == 'id'"><![CDATA[ id = #{item.value} ]]></if>
+                    <if test="item.name == 'phone'"><![CDATA[ phone = #{item.value} ]]></if>
+                    <if test="item.name == 'feedbackTypeId'"><![CDATA[ feedback_type_id = #{item.value} ]]></if>
+                    <if test="item.name == 'feedbackTypeText'"><![CDATA[ feedback_type_text = #{item.value} ]]></if>
+                    <if test="item.name == 'feedbackProblemId'"><![CDATA[ feedback_problem_id = #{item.value} ]]></if>
+                    <if test="item.name == 'feedbackProblemText'"><![CDATA[ feedback_problem_text = #{item.value} ]]></if>
+                    <if test="item.name == 'text'"><![CDATA[ text = #{item.value} ]]></if>
+                    <if test="item.name == 'picture1'"><![CDATA[ picture1 = #{item.value} ]]></if>
+                    <if test="item.name == 'picture2'"><![CDATA[ picture2 = #{item.value} ]]></if>
+                    <if test="item.name == 'picture3'"><![CDATA[ picture3 = #{item.value} ]]></if>
+                    <if test="item.name == 'picture4'"><![CDATA[ picture4 = #{item.value} ]]></if>
+                </foreach>
+            </if>
+        </trim>
+    </sql>
+
+    <sql id="orderSql">
+        <trim prefix="ORDER BY" suffixOverrides=",">
+            <if test="_orderBy == 'id_desc'"><![CDATA[ id desc, ]]></if>
+            <if test="_orderBy == 'id_asc'"><![CDATA[ id, ]]></if>
+            <if test="_orderBy == 'phone_desc'"><![CDATA[ phone desc, ]]></if>
+            <if test="_orderBy == 'phone_asc'"><![CDATA[ phone, ]]></if>
+            <if test="_orderBy == 'feedbackTypeId_desc'"><![CDATA[ feedback_type_id desc, ]]></if>
+            <if test="_orderBy == 'feedbackTypeId_asc'"><![CDATA[ feedback_type_id, ]]></if>
+            <if test="_orderBy == 'feedbackTypeText_desc'"><![CDATA[ feedback_type_text desc, ]]></if>
+            <if test="_orderBy == 'feedbackTypeText_asc'"><![CDATA[ feedback_type_text, ]]></if>
+            <if test="_orderBy == 'feedbackProblemId_desc'"><![CDATA[ feedback_problem_id desc, ]]></if>
+            <if test="_orderBy == 'feedbackProblemId_asc'"><![CDATA[ feedback_problem_id, ]]></if>
+            <if test="_orderBy == 'feedbackProblemText_desc'"><![CDATA[ feedback_problem_text desc, ]]></if>
+            <if test="_orderBy == 'feedbackProblemText_asc'"><![CDATA[ feedback_problem_text, ]]></if>
+            <if test="_orderBy == 'text_desc'"><![CDATA[ text desc, ]]></if>
+            <if test="_orderBy == 'text_asc'"><![CDATA[ text, ]]></if>
+            <if test="_orderBy == 'picture1_desc'"><![CDATA[ picture1 desc, ]]></if>
+            <if test="_orderBy == 'picture1_asc'"><![CDATA[ picture1, ]]></if>
+            <if test="_orderBy == 'picture2_desc'"><![CDATA[ picture2 desc, ]]></if>
+            <if test="_orderBy == 'picture2_asc'"><![CDATA[ picture2, ]]></if>
+            <if test="_orderBy == 'picture3_desc'"><![CDATA[ picture3 desc, ]]></if>
+            <if test="_orderBy == 'picture3_asc'"><![CDATA[ picture3, ]]></if>
+            <if test="_orderBy == 'picture4_desc'"><![CDATA[ picture4 desc, ]]></if>
+            <if test="_orderBy == 'picture4_asc'"><![CDATA[ picture4, ]]></if>
+            <if test="_orderBy == 'createTime_desc'"><![CDATA[ create_time desc, ]]></if>
+            <if test="_orderBy == 'createTime_asc'"><![CDATA[ create_time, ]]></if>
+
+			<if test="_orderBy_enum != null">
+				<foreach collection="_orderBy_enum" item="orderItem" open="" separator="," close="">
+					<if test="orderItem == 'id_desc'"><![CDATA[ id desc ]]></if>
+					<if test="orderItem == 'id_asc'"><![CDATA[ id ]]></if>
+					<if test="orderItem == 'phone_desc'"><![CDATA[ phone desc ]]></if>
+					<if test="orderItem == 'phone_asc'"><![CDATA[ phone ]]></if>
+					<if test="orderItem == 'feedbackTypeId_desc'"><![CDATA[ feedback_type_id desc ]]></if>
+					<if test="orderItem == 'feedbackTypeId_asc'"><![CDATA[ feedback_type_id ]]></if>
+					<if test="orderItem == 'feedbackTypeText_desc'"><![CDATA[ feedback_type_text desc ]]></if>
+					<if test="orderItem == 'feedbackTypeText_asc'"><![CDATA[ feedback_type_text ]]></if>
+					<if test="orderItem == 'feedbackProblemId_desc'"><![CDATA[ feedback_problem_id desc ]]></if>
+					<if test="orderItem == 'feedbackProblemId_asc'"><![CDATA[ feedback_problem_id ]]></if>
+					<if test="orderItem == 'feedbackProblemText_desc'"><![CDATA[ feedback_problem_text desc ]]></if>
+					<if test="orderItem == 'feedbackProblemText_asc'"><![CDATA[ feedback_problem_text ]]></if>
+					<if test="orderItem == 'text_desc'"><![CDATA[ text desc ]]></if>
+					<if test="orderItem == 'text_asc'"><![CDATA[ text ]]></if>
+					<if test="orderItem == 'picture1_desc'"><![CDATA[ picture1 desc ]]></if>
+					<if test="orderItem == 'picture1_asc'"><![CDATA[ picture1 ]]></if>
+					<if test="orderItem == 'picture2_desc'"><![CDATA[ picture2 desc ]]></if>
+					<if test="orderItem == 'picture2_asc'"><![CDATA[ picture2 ]]></if>
+					<if test="orderItem == 'picture3_desc'"><![CDATA[ picture3 desc ]]></if>
+					<if test="orderItem == 'picture3_asc'"><![CDATA[ picture3 ]]></if>
+					<if test="orderItem == 'picture4_desc'"><![CDATA[ picture4 desc ]]></if>
+					<if test="orderItem == 'picture4_asc'"><![CDATA[ picture4 ]]></if>
+					<if test="orderItem == 'createTime_desc'"><![CDATA[ create_time desc ]]></if>
+					<if test="orderItem == 'createTime_asc'"><![CDATA[ create_time ]]></if>
+					
+				</foreach>
+			</if>
+        </trim>
+    </sql>
+	
+	<sql id="updateSetSql">
+        <trim prefix="set" prefixOverrides="and">
+            <if test="phone != null"><![CDATA[ and phone = #{phone} ]]></if>
+            <if test="feedbackTypeId != null"><![CDATA[ and feedback_type_id = #{feedbackTypeId} ]]></if>
+            <if test="feedbackTypeText != null"><![CDATA[ and feedback_type_text = #{feedbackTypeText} ]]></if>
+            <if test="feedbackProblemId != null"><![CDATA[ and feedback_problem_id = #{feedbackProblemId} ]]></if>
+            <if test="feedbackProblemText != null"><![CDATA[ and feedback_problem_text = #{feedbackProblemText} ]]></if>
+            <if test="text != null"><![CDATA[ and text = #{text} ]]></if>
+            <if test="picture1 != null"><![CDATA[ and picture1 = #{picture1} ]]></if>
+            <if test="picture2 != null"><![CDATA[ and picture2 = #{picture2} ]]></if>
+            <if test="picture3 != null"><![CDATA[ and picture3 = #{picture3} ]]></if>
+            <if test="picture4 != null"><![CDATA[ and picture4 = #{picture4} ]]></if>
+            <if test="createTime != null"><![CDATA[ and create_time = #{createTime} ]]></if>
+        </trim>
+    </sql>	
+
+    <insert id="insertObject" parameterType="cn.com.czcb.model.Feedback">
+        insert into
+        feedback(id,phone,feedback_type_id,feedback_type_text,feedback_problem_id,feedback_problem_text,text,picture1,picture2,picture3,picture4,create_time)
+        values(#{id},#{phone},#{feedbackTypeId},#{feedbackTypeText},#{feedbackProblemId},#{feedbackProblemText},#{text},#{picture1},#{picture2},#{picture3},#{picture4},#{createTime});
+    </insert>
+
+    <update id="updateObject" parameterType="cn.com.czcb.model.Feedback">
+        update feedback
+        set phone=#{phone},feedback_type_id=#{feedbackTypeId},feedback_type_text=#{feedbackTypeText},feedback_problem_id=#{feedbackProblemId},feedback_problem_text=#{feedbackProblemText},text=#{text},picture1=#{picture1},picture2=#{picture2},picture3=#{picture3},picture4=#{picture4},create_time=#{createTime}
+        where id=#{id};
+    </update>
+	
+	<update id="updateObjectByFields" parameterType="java.util.Map">
+        update feedback
+        <include refid="updateSetSql" />
+        where id=#{id};
+    </update>
+
+    <delete id="deleteObject" parameterType="string">
+        delete from feedback where id=#{id};
+    </delete>
+
+    <delete id="deleteObjectByWhere" parameterType="cn.com.czcb.dao.QueryParams">
+        delete from feedback
+        <include refid="whereSql" />
+    </delete>
+
+    <select id="getBaseObject" parameterType="string" resultMap="resultMap">
+        select 
+        <include refid="baseCol" />
+        from feedback where id=#{id};
+    </select>
+
+    <select id="getDetailObject" parameterType="string" resultMap="resultMap">
+        select * from feedback where id=#{id};
+    </select>
+
+    <select id="queryCount" parameterType="cn.com.czcb.dao.QueryParams" resultType="int">
+        select count(*) from feedback
+          <include refid="whereSql" />
+    </select>
+
+    <select id="queryBaseList" parameterType="cn.com.czcb.dao.QueryParams" resultMap="resultMap">
+        select 
+        <include refid="baseCol" />
+        from feedback
+            <include refid="whereSql" />
+          <include refid="orderSql" />
+        <include refid="pageSql" />
+    </select>
+
+    <select id="queryDetailList" parameterType="cn.com.czcb.dao.QueryParams" resultMap="resultMap">
+        select * from feedback
+            <include refid="whereSql" />
+          <include refid="orderSql" />
+        <include refid="pageSql" />
+    </select>
+</mapper> 
+
+
